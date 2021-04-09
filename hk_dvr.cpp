@@ -1,5 +1,6 @@
 #include "hk_dvr.h"
 #include "hk_play.h"
+#include "hk_error.h"
 
 #include <cstring>
 #include <iostream>
@@ -21,7 +22,7 @@ HK_DVR::HK_DVR(const std::shared_ptr<const HK_SDK> & sdk, const std::string & ip
 
     if (myUserID < 0)
     {
-        error("Login error");
+        error("NET_DVR_Login_V40");
     }
 }
 
@@ -50,7 +51,7 @@ std::shared_ptr<HK_Play> HK_DVR::getPlayer(const LONG channel, const HWND window
     const LONG realPlayHandle = NET_DVR_RealPlay_V40(myUserID, &struPlayInfo, nullptr, nullptr);
     if (realPlayHandle < 0)
     {
-        return std::shared_ptr<HK_Play>();
+        error("NET_DVR_Login_V40");
     }
     else
     {
@@ -61,12 +62,7 @@ std::shared_ptr<HK_Play> HK_DVR::getPlayer(const LONG channel, const HWND window
 
 [[ noreturn ]] void HK_DVR::error(const char * msg) const
 {
-    LONG err = NET_DVR_GetLastError();
-    std::ostringstream ss;
-
-    ss << msg << ": " << err;
-    ss << " = " << NET_DVR_GetErrorMsg(&err);
-    throw std::runtime_error(ss.str());
+    throw HK_Error(msg);
 }
 
 void HK_DVR::debug(const char * msg) const
@@ -78,4 +74,3 @@ void HK_DVR::debug(const char * msg) const
     ss << " = " << NET_DVR_GetErrorMsg(&err);
     std::cerr << ss.str() << std::endl;
 }
-

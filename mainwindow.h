@@ -10,6 +10,7 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class HK_DVR;
+class HK_Error;
 class HK_Play;
 
 class MainWindow : public QMainWindow
@@ -24,7 +25,7 @@ private slots:
     void on_actionPlay_triggered();
 
 private:
-    void show_error(const char * function);
+    void show_error(const HK_Error & error);
 
     const std::shared_ptr<HK_DVR> myDVR;
     Ui::MainWindow *ui;

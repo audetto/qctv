@@ -8,6 +8,7 @@
 class HK_SDK;
 class HK_Play;
 
+
 class HK_DVR
 {
 public:
