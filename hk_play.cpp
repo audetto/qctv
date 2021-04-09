@@ -10,3 +10,8 @@ HK_Play::~HK_Play()
 {
     NET_DVR_StopRealPlay(myHandle);
 }
+
+void HK_Play::resize()
+{
+    NET_DVR_ChangeWndResolution(myHandle);
+}

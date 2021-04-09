@@ -8,6 +8,8 @@ class HK_Play
 public:
     HK_Play(const LONG handle);
 
+    void resize();
+
     ~HK_Play();
 
 private:

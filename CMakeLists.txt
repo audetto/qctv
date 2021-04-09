@@ -35,6 +35,8 @@ add_executable(qctv
     hk_play.h
     hk_error.cpp
     hk_error.h
+    playframe.cpp
+    playframe.h
 )
 
 target_include_directories(qctv PRIVATE ${SDK}/incEn)

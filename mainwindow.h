@@ -11,7 +11,6 @@ QT_END_NAMESPACE
 
 class HK_DVR;
 class HK_Error;
-class HK_Play;
 
 class MainWindow : public QMainWindow
 {
@@ -29,6 +28,7 @@ private:
 
     const std::shared_ptr<HK_DVR> myDVR;
     Ui::MainWindow *ui;
-    std::shared_ptr<HK_Play> myPlay;
+
 };
+
 #endif // MAINWINDOW_H

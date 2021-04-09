@@ -3,6 +3,7 @@
 
 #include "hk_dvr.h"
 #include "hk_error.h"
+#include "playframe.h"
 
 #include <QMdiSubWindow>
 #include <QMessageBox>
@@ -22,15 +23,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionPlay_triggered()
 {
-    QFrame * widget = new QFrame();
-    widget->setMinimumSize(560, 384);
-    QMdiSubWindow * window = ui->mdiArea->addSubWindow(widget);
+    PlayFrame * frame = new PlayFrame();
+    frame->setMinimumSize(400, 225);
+
+    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
     window->setWindowTitle("Camera");
     window->show();
-    WId id = widget->winId();
+
+    WId id = frame->winId();
     try
     {
-        myPlay = myDVR->getPlayer(0, id);
+        frame->setPlay(myDVR->getPlayer(0, id));
     }
     catch (const HK_Error & error)
     {
