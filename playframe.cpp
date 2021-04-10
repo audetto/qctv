@@ -76,3 +76,38 @@ void PlayFrame::on_snapshot_clicked()
         showError(this, error);
     }
 }
+
+void PlayFrame::on_record_clicked()
+{
+    ui->record->setEnabled(false);
+    ui->stop->setEnabled(true);
+
+    QSettings settings;
+    QDir dir = settings.value("output/videos", "/tmp/qctv").toString();
+    if (!dir.exists())
+    {
+        if (!dir.mkpath("."))
+        {
+            return;
+        }
+    }
+
+    QDateTime now = QDateTime::currentDateTime();
+    QString filename = QString("C%1_").arg(myPlay->getChannel()) + now.toString("yyyy-MM-dd_hh-mm-ss") + QString(".mp4");
+    QString path = dir.filePath(filename);
+    try
+    {
+        myPlay->record(path.toStdString());
+    }
+    catch (const HK_Error & error)
+    {
+        showError(this, error);
+    }
+}
+
+void PlayFrame::on_stop_clicked()
+{
+    ui->record->setEnabled(true);
+    ui->stop->setEnabled(false);
+    myPlay->stop();
+}

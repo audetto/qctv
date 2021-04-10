@@ -28,6 +28,10 @@ protected:
 private slots:
     void on_snapshot_clicked();
 
+    void on_record_clicked();
+
+    void on_stop_clicked();
+
 private:
     Ui::PlayFrame *ui;
     std::shared_ptr<HK_Play> myPlay;
