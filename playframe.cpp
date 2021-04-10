@@ -69,7 +69,7 @@ void PlayFrame::on_snapshot_clicked()
     try
     {
         myPlay->snapshot(path.toStdString());
-        QMessageBox::information(this, "Snapshot", QString("Snapshot saved to %1").arg(path));
+        ui->status->setText(path);
     }
     catch (const HK_Error & error)
     {
@@ -98,6 +98,7 @@ void PlayFrame::on_record_clicked()
     try
     {
         myPlay->record(path.toStdString());
+        ui->status->setText(path);
     }
     catch (const HK_Error & error)
     {
