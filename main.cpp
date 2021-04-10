@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     }
     catch (const HK_Error & e)
     {
-        std::cerr << e.what() << " = " << e.getError() << std::endl;
+        std::cerr << e.what() << ": " << e.getError() << " = " << e.getMessage() << std::endl;
     }
     catch (const std::exception & e)
     {

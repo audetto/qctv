@@ -11,8 +11,11 @@ public:
     HK_Error(const char * function);
 
     LONG getError() const;
+
+    const char * getMessage() const;
 private:
     const LONG myError;
+    const char * myMessage;
 };
 
 

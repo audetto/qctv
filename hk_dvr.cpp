@@ -51,7 +51,7 @@ std::shared_ptr<HK_Play> HK_DVR::getPlayer(const LONG channel, const HWND window
     const LONG realPlayHandle = NET_DVR_RealPlay_V40(myUserID, &struPlayInfo, nullptr, nullptr);
     if (realPlayHandle < 0)
     {
-        error("NET_DVR_Login_V40");
+        error("NET_DVR_RealPlay_V40");
     }
     else
     {

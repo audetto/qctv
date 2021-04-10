@@ -43,6 +43,6 @@ void MainWindow::on_actionPlay_triggered()
 
 void MainWindow::show_error(const HK_Error & error)
 {
-    const QString msg = QString("Last error = %1").arg(error.getError());
+    const QString msg = QString("Last error = %1\n%2").arg(QString::number(error.getError()), QString::fromUtf8(error.getMessage()));
     QMessageBox::critical(this, QString::fromUtf8(error.what()), msg);
 }
