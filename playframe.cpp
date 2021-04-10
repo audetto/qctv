@@ -10,9 +10,10 @@
 #include <QDateTime>
 #include <QMessageBox>
 
-PlayFrame::PlayFrame(QWidget *parent) :
-    QFrame(parent),
-    ui(new Ui::PlayFrame)
+PlayFrame::PlayFrame(QWidget *parent)
+    : QFrame(parent)
+    , ui(new Ui::PlayFrame)
+    , myTimer(0)
 {
     ui->setupUi(this);
 }
@@ -77,6 +78,13 @@ void PlayFrame::on_snapshot_clicked()
     }
 }
 
+void PlayFrame::timerEvent(QTimerEvent *)
+{
+    const qint64 msec = myStartTime.msecsTo(QDateTime::currentDateTime());
+    const QTime time = QTime::fromMSecsSinceStartOfDay(msec);
+    ui->time->setText(time.toString());
+}
+
 void PlayFrame::on_record_clicked()
 {
     ui->record->setEnabled(false);
@@ -99,6 +107,8 @@ void PlayFrame::on_record_clicked()
     {
         myPlay->record(path.toStdString());
         ui->status->setText(path);
+        myTimer = startTimer(1000);
+        myStartTime = QDateTime::currentDateTime();
     }
     catch (const HK_Error & error)
     {
@@ -111,4 +121,6 @@ void PlayFrame::on_stop_clicked()
     ui->record->setEnabled(true);
     ui->stop->setEnabled(false);
     myPlay->stop();
+    killTimer(myTimer);
+    myTimer = 0;
 }

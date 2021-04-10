@@ -2,6 +2,7 @@
 #define PLAYFRAME_H
 
 #include <QFrame>
+#include <QDateTime>
 
 namespace Ui {
 class PlayFrame;
@@ -24,6 +25,7 @@ public:
 
 protected:
     bool event(QEvent *event) override;
+    void timerEvent(QTimerEvent *);
 
 private slots:
     void on_snapshot_clicked();
@@ -35,6 +37,9 @@ private slots:
 private:
     Ui::PlayFrame *ui;
     std::shared_ptr<HK_Play> myPlay;
+
+    int myTimer;
+    QDateTime myStartTime;
 };
 
 #endif // PLAYFRAME_H
