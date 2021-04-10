@@ -15,6 +15,9 @@ MainWindow::MainWindow(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QIcon icon(QIcon::fromTheme(":/hk.ico"));
+    this->setWindowIcon(icon);
 }
 
 MainWindow::~MainWindow()

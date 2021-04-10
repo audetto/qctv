@@ -37,6 +37,7 @@ add_executable(qctv
     playframe.ui
     utils.cpp
     utils.h
+    qctv.qrc
 )
 
 target_include_directories(qctv PRIVATE ${SDK_INC})
