@@ -8,6 +8,10 @@ public:
     HK_SDK(const bool logPrint);
 
     ~HK_SDK();
+
+    [[ noreturn ]] static void error(const char * msg);
+    static void debug(const char * msg);
+
 };
 
 

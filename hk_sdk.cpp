@@ -1,6 +1,9 @@
 #include "hk_sdk.h"
+#include "hk_error.h"
+
 #include "HCNetSDK.h"
 
+#include <sstream>
 #include <iostream>
 
 namespace
@@ -23,4 +26,19 @@ HK_SDK::HK_SDK(const bool logPrint)
 HK_SDK::~HK_SDK()
 {
     NET_DVR_Cleanup();
+}
+
+[[ noreturn ]] void HK_SDK::error(const char * msg)
+{
+    throw HK_Error(msg);
+}
+
+void HK_SDK::debug(const char * msg)
+{
+    LONG err = NET_DVR_GetLastError();
+    std::ostringstream ss;
+
+    ss << msg << ": " << err;
+    ss << " = " << NET_DVR_GetErrorMsg(&err);
+    std::cerr << ss.str() << std::endl;
 }

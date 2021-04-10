@@ -24,8 +24,6 @@ private slots:
     void on_actionPlay_triggered();
 
 private:
-    void show_error(const HK_Error & error);
-
     const std::shared_ptr<HK_DVR> myDVR;
     Ui::MainWindow *ui;
 

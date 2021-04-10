@@ -4,6 +4,7 @@
 #include "hk_dvr.h"
 #include "hk_error.h"
 #include "playframe.h"
+#include "utils.h"
 
 #include <QMdiSubWindow>
 #include <QMessageBox>
@@ -23,26 +24,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionPlay_triggered()
 {
+    const size_t channel = 1;
     PlayFrame * frame = new PlayFrame();
-    frame->setMinimumSize(400, 225);
 
     QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
-    window->setWindowTitle("Camera");
+    const QString title = QString("Live Camera %1").arg(channel);
+    window->setWindowTitle(title);
     window->show();
 
-    WId id = frame->winId();
+    WId id = frame->getWindowHandle();
     try
     {
-        frame->setPlay(myDVR->getPlayer(0, id));
+        frame->setPlay(myDVR->getPlayer(channel, id));
     }
     catch (const HK_Error & error)
     {
-        show_error(error);
+        showError(this, error);
     }
 }
 
-void MainWindow::show_error(const HK_Error & error)
-{
-    const QString msg = QString("Last error = %1\n%2").arg(QString::number(error.getError()), QString::fromUtf8(error.getMessage()));
-    QMessageBox::critical(this, QString::fromUtf8(error.what()), msg);
-}

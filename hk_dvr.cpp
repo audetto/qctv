@@ -1,10 +1,8 @@
 #include "hk_dvr.h"
+#include "hk_sdk.h"
 #include "hk_play.h"
-#include "hk_error.h"
 
 #include <cstring>
-#include <iostream>
-#include <sstream>
 
 HK_DVR::HK_DVR(const std::shared_ptr<const HK_SDK> & sdk, const std::string & ip, const WORD port, const std::string & username, const std::string & password)
     : mySDK(sdk)
@@ -22,7 +20,7 @@ HK_DVR::HK_DVR(const std::shared_ptr<const HK_SDK> & sdk, const std::string & ip
 
     if (myUserID < 0)
     {
-        error("NET_DVR_Login_V40");
+        HK_SDK::error("NET_DVR_Login_V40");
     }
 }
 
@@ -32,11 +30,11 @@ HK_DVR::~HK_DVR()
     myUserID = 0;
     if (!ok)
     {
-        debug("NET_DVR_Logout");
+        HK_SDK::debug("NET_DVR_Logout");
     }
 }
 
-std::shared_ptr<HK_Play> HK_DVR::getPlayer(const LONG channel, const HWND window) const
+std::shared_ptr<HK_Play> HK_DVR::getPlayer(const size_t channel, const HWND window) const
 {
     const LONG dChannel = myDeviceInfo.struDeviceV30.byStartDChan + channel;
 
@@ -51,26 +49,10 @@ std::shared_ptr<HK_Play> HK_DVR::getPlayer(const LONG channel, const HWND window
     const LONG realPlayHandle = NET_DVR_RealPlay_V40(myUserID, &struPlayInfo, nullptr, nullptr);
     if (realPlayHandle < 0)
     {
-        error("NET_DVR_RealPlay_V40");
+        HK_SDK::error("NET_DVR_RealPlay_V40");
     }
     else
     {
-        return std::make_shared<HK_Play>(realPlayHandle);
+        return std::make_shared<HK_Play>(realPlayHandle, channel);
     }
-}
-
-
-[[ noreturn ]] void HK_DVR::error(const char * msg) const
-{
-    throw HK_Error(msg);
-}
-
-void HK_DVR::debug(const char * msg) const
-{
-    LONG err = NET_DVR_GetLastError();
-    std::ostringstream ss;
-
-    ss << msg << ": " << err;
-    ss << " = " << NET_DVR_GetErrorMsg(&err);
-    std::cerr << ss.str() << std::endl;
 }

@@ -16,15 +16,11 @@ public:
 
     const NET_DVR_DEVICEINFO_V40 & getDeviceInfo() const;
 
-    std::shared_ptr<HK_Play> getPlayer(const LONG channel, const HWND window) const;
+    std::shared_ptr<HK_Play> getPlayer(const size_t channel, const HWND window) const;
 
     ~HK_DVR();
 
 private:
-
-    [[ noreturn ]] void error(const char * msg) const;
-    void debug(const char * msg) const;
-
     const std::shared_ptr<const HK_SDK> mySDK;
     LONG myUserID;
     NET_DVR_DEVICEINFO_V40 myDeviceInfo;
