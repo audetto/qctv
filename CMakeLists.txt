@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SDK $ENV{HOME}/projects/cctv/sdk)
+set(PLAYER $ENV{HOME}/projects/cctv/player)
 
 set(SDK_INC ${SDK}/incEn)
 set(SDK_LIB ${SDK}/lib)
@@ -40,7 +41,7 @@ add_executable(qctv
     qctv.qrc
 )
 
-target_include_directories(qctv PRIVATE ${SDK_INC})
+target_include_directories(qctv PRIVATE ${SDK_INC} ${PLAYER})
 
 find_library(HCNETSDK NAMES hcnetsdk PATHS ${SDK_LIB})
 find_library(PLAYCTRL NAMES PlayCtrl PATHS ${SDK_LIB})
@@ -49,6 +50,7 @@ find_library(SUPERRENDER NAMES SuperRender PATHS ${SDK_LIB})
 
 target_link_libraries(qctv PRIVATE
   ${HCNETSDK}
+  ${PLAYCTRL}
   )
 
 target_link_libraries(qctv PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

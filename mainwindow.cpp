@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 
 #include "hk_dvr.h"
+#include "hk_sdk.h"
 #include "hk_error.h"
 #include "playframe.h"
 #include "utils.h"
@@ -46,3 +47,16 @@ void MainWindow::on_actionPlay_triggered()
     }
 }
 
+
+void MainWindow::on_actionAbout_Qt_triggered()
+{
+    QMessageBox::aboutQt(this);
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    const QString sdkVersion = QString::fromStdString(HK_SDK::getSDKVersion());
+    const QString playerVersion = QString::fromStdString(HK_SDK::getPlayerVersion());
+    const QString message = QString("HCNetSDK\tV%1\nPlayCtrl\tV%2").arg(sdkVersion, playerVersion);
+    QMessageBox::about(this, QApplication::applicationName(), message);
+}

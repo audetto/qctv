@@ -23,6 +23,10 @@ public:
 private slots:
     void on_actionPlay_triggered();
 
+    void on_actionAbout_Qt_triggered();
+
+    void on_actionAbout_triggered();
+
 private:
     const std::shared_ptr<HK_DVR> myDVR;
     Ui::MainWindow *ui;
