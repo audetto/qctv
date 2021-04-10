@@ -5,7 +5,7 @@
 class HK_SDK
 {
 public:
-    HK_SDK();
+    HK_SDK(const bool logPrint);
 
     ~HK_SDK();
 };

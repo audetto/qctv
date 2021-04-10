@@ -13,11 +13,11 @@ namespace
 
 }
 
-HK_SDK::HK_SDK()
+HK_SDK::HK_SDK(const bool logPrint)
 {
     NET_DVR_Init();
     NET_DVR_SetExceptionCallBack_V30(0, NULL, g_ExceptionCallBack, NULL);
-    NET_DVR_SetLogPrint(true);
+    NET_DVR_SetLogPrint(logPrint);
 }
 
 HK_SDK::~HK_SDK()
