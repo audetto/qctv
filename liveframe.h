@@ -8,7 +8,7 @@ namespace Ui {
 class LiveFrame;
 }
 
-class HK_Play;
+class HK_LivePlayer;
 
 class LiveFrame : public QFrame
 {
@@ -18,7 +18,7 @@ public:
     explicit LiveFrame(QWidget *parent = nullptr);
     ~LiveFrame();
 
-    void setPlay(const std::shared_ptr<HK_Play> & play);
+    void setPlay(const std::shared_ptr<HK_LivePlayer> & play);
     void resizeEvent(QResizeEvent *event) override;
 
     WId getWindowHandle() const;
@@ -36,7 +36,7 @@ private slots:
 
 private:
     Ui::LiveFrame *ui;
-    std::shared_ptr<HK_Play> myPlay;
+    std::shared_ptr<HK_LivePlayer> myLivePlayer;
 
     int myTimer;
     QDateTime myStartTime;

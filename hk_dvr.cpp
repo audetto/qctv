@@ -1,6 +1,6 @@
 #include "hk_dvr.h"
 #include "hk_sdk.h"
-#include "hk_play.h"
+#include "hk_liveplayer.h"
 
 #include <cstring>
 
@@ -34,7 +34,7 @@ HK_DVR::~HK_DVR()
     }
 }
 
-std::shared_ptr<HK_Play> HK_DVR::getPlayer(const size_t channel, const HWND window) const
+std::shared_ptr<HK_LivePlayer> HK_DVR::getLivePlayer(const size_t channel, const HWND window) const
 {
     const LONG dChannel = myDeviceInfo.struDeviceV30.byStartDChan + channel;
 
@@ -53,6 +53,6 @@ std::shared_ptr<HK_Play> HK_DVR::getPlayer(const size_t channel, const HWND wind
     }
     else
     {
-        return std::make_shared<HK_Play>(realPlayHandle, channel);
+        return std::make_shared<HK_LivePlayer>(realPlayHandle, channel);
     }
 }

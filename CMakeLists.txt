@@ -29,8 +29,8 @@ add_executable(qctv
     hk_sdk.h
     hk_dvr.cpp
     hk_dvr.h
-    hk_play.cpp
-    hk_play.h
+    hk_liveplayer.cpp
+    hk_liveplayer.h
     hk_error.cpp
     hk_error.h
     liveframe.cpp

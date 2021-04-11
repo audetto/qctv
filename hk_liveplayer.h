@@ -1,15 +1,15 @@
-#ifndef HK_PLAY_H
-#define HK_PLAY_H
+#ifndef HK_LIVEPLAYER_H
+#define HK_LIVEPLAYER_H
 
 #include "HCNetSDK.h"
 
 #include <string>
 
-class HK_Play
+class HK_LivePlayer
 {
 public:
-    HK_Play(const LONG handle, const size_t channel);
-    ~HK_Play();
+    HK_LivePlayer(const LONG handle, const size_t channel);
+    ~HK_LivePlayer();
 
     void resize();
 
@@ -25,4 +25,4 @@ private:
     bool myRecording;
 };
 
-#endif // HK_PLAY_H
+#endif // HK_LIVEPLAYER_H

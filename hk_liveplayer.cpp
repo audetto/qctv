@@ -1,9 +1,9 @@
-#include "hk_play.h"
+#include "hk_liveplayer.h"
 #include "hk_sdk.h"
 
 #include "utils.h"
 
-HK_Play::HK_Play(const LONG handle, const size_t channel)
+HK_LivePlayer::HK_LivePlayer(const LONG handle, const size_t channel)
     : myHandle(handle)
     , myChannel(channel)
     , myRecording(false)
@@ -11,23 +11,23 @@ HK_Play::HK_Play(const LONG handle, const size_t channel)
 
 }
 
-HK_Play::~HK_Play()
+HK_LivePlayer::~HK_LivePlayer()
 {
     stop();
     NET_DVR_StopRealPlay(myHandle);
 }
 
-void HK_Play::resize()
+void HK_LivePlayer::resize()
 {
     NET_DVR_ChangeWndResolution(myHandle);
 }
 
-size_t HK_Play::getChannel() const
+size_t HK_LivePlayer::getChannel() const
 {
     return myChannel;
 }
 
-void HK_Play::snapshot(const std::string & filename) const
+void HK_LivePlayer::snapshot(const std::string & filename) const
 {
     if (!NET_DVR_CapturePicture(myHandle, cast(filename)))
     {
@@ -35,7 +35,7 @@ void HK_Play::snapshot(const std::string & filename) const
     }
 }
 
-void HK_Play::stop()
+void HK_LivePlayer::stop()
 {
     if (myRecording)
     {
@@ -44,7 +44,7 @@ void HK_Play::stop()
     }
 }
 
-void HK_Play::record(const std::string & filename)
+void HK_LivePlayer::record(const std::string & filename)
 {
     stop();
     if (!NET_DVR_SaveRealData(myHandle, cast(filename)))

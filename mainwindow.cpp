@@ -50,7 +50,7 @@ void MainWindow::livePlay(const size_t channel)
     WId id = frame->getWindowHandle();
     try
     {
-        frame->setPlay(myDVR->getPlayer(channel, id));
+        frame->setPlay(myDVR->getLivePlayer(channel, id));
     }
     catch (const HK_Error & error)
     {

@@ -1,7 +1,7 @@
 #include "liveframe.h"
 #include "ui_liveframe.h"
 
-#include "hk_play.h"
+#include "hk_liveplayer.h"
 #include "hk_error.h"
 #include "utils.h"
 
@@ -26,15 +26,15 @@ LiveFrame::~LiveFrame()
 void LiveFrame::resizeEvent(QResizeEvent *event)
 {
     QFrame::resizeEvent(event);
-    if (myPlay)
+    if (myLivePlayer)
     {
-        myPlay->resize();
+        myLivePlayer->resize();
     }
 }
 
-void LiveFrame::setPlay(const std::shared_ptr<HK_Play> & play)
+void LiveFrame::setPlay(const std::shared_ptr<HK_LivePlayer> & play)
 {
-    myPlay = play;
+    myLivePlayer = play;
 }
 
 bool LiveFrame::event(QEvent *event)
@@ -42,7 +42,7 @@ bool LiveFrame::event(QEvent *event)
     if (event->type() == QEvent::WinIdChange)
     {
         // I know of no way to tell NET_DVR that the window id has changed
-        myPlay.reset();
+        myLivePlayer.reset();
     }
     return QFrame::event(event);
 }
@@ -65,11 +65,11 @@ void LiveFrame::on_picture_clicked()
     }
 
     QDateTime now = QDateTime::currentDateTime();
-    QString filename = QString("C%1_").arg(myPlay->getChannel()) + now.toString("yyyy-MM-dd_hh-mm-ss") + QString(".bmp");
+    QString filename = QString("C%1_").arg(myLivePlayer->getChannel()) + now.toString("yyyy-MM-dd_hh-mm-ss") + QString(".bmp");
     QString path = dir.filePath(filename);
     try
     {
-        myPlay->snapshot(path.toStdString());
+        myLivePlayer->snapshot(path.toStdString());
         ui->status->setText(path);
     }
     catch (const HK_Error & error)
@@ -101,11 +101,11 @@ void LiveFrame::on_record_clicked()
     }
 
     QDateTime now = QDateTime::currentDateTime();
-    QString filename = QString("C%1_").arg(myPlay->getChannel()) + now.toString("yyyy-MM-dd_hh-mm-ss") + QString(".mp4");
+    QString filename = QString("C%1_").arg(myLivePlayer->getChannel()) + now.toString("yyyy-MM-dd_hh-mm-ss") + QString(".mp4");
     QString path = dir.filePath(filename);
     try
     {
-        myPlay->record(path.toStdString());
+        myLivePlayer->record(path.toStdString());
         ui->status->setText(path);
         myTimer = startTimer(1000);
         myStartTime = QDateTime::currentDateTime();
@@ -120,7 +120,7 @@ void LiveFrame::on_stop_clicked()
 {
     ui->record->setEnabled(true);
     ui->stop->setEnabled(false);
-    myPlay->stop();
+    myLivePlayer->stop();
     killTimer(myTimer);
     myTimer = 0;
 }

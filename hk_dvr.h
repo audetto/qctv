@@ -6,19 +6,19 @@
 #include <memory>
 
 class HK_SDK;
-class HK_Play;
+class HK_LivePlayer;
 
 
 class HK_DVR
 {
 public:
     HK_DVR(const std::shared_ptr<const HK_SDK> & sdk, const std::string & ip, const WORD port, const std::string & username, const std::string & password);
+    ~HK_DVR();
 
     const NET_DVR_DEVICEINFO_V40 & getDeviceInfo() const;
 
-    std::shared_ptr<HK_Play> getPlayer(const size_t channel, const HWND window) const;
+    std::shared_ptr<HK_LivePlayer> getLivePlayer(const size_t channel, const HWND window) const;
 
-    ~HK_DVR();
 
 private:
     const std::shared_ptr<const HK_SDK> mySDK;
