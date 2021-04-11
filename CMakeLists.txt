@@ -33,9 +33,9 @@ add_executable(qctv
     hk_play.h
     hk_error.cpp
     hk_error.h
-    playframe.cpp
-    playframe.h
-    playframe.ui
+    liveframe.cpp
+    liveframe.h
+    liveframe.ui
     utils.cpp
     utils.h
     qctv.qrc

@@ -4,7 +4,7 @@
 #include "hk_dvr.h"
 #include "hk_sdk.h"
 #include "hk_error.h"
-#include "playframe.h"
+#include "liveframe.h"
 #include "utils.h"
 
 #include <QMdiSubWindow>
@@ -29,7 +29,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionPlay_triggered()
 {
     const size_t channel = 1;
-    PlayFrame * frame = new PlayFrame();
+    LiveFrame * frame = new LiveFrame();
 
     QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
     const QString title = QString("Live Camera %1").arg(channel);

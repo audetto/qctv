@@ -1,5 +1,5 @@
-#include "playframe.h"
-#include "ui_playframe.h"
+#include "liveframe.h"
+#include "ui_liveframe.h"
 
 #include "hk_play.h"
 #include "hk_error.h"
@@ -10,20 +10,20 @@
 #include <QDateTime>
 #include <QMessageBox>
 
-PlayFrame::PlayFrame(QWidget *parent)
+LiveFrame::LiveFrame(QWidget *parent)
     : QFrame(parent)
-    , ui(new Ui::PlayFrame)
+    , ui(new Ui::LiveFrame)
     , myTimer(0)
 {
     ui->setupUi(this);
 }
 
-PlayFrame::~PlayFrame()
+LiveFrame::~LiveFrame()
 {
     delete ui;
 }
 
-void PlayFrame::resizeEvent(QResizeEvent *event)
+void LiveFrame::resizeEvent(QResizeEvent *event)
 {
     QFrame::resizeEvent(event);
     if (myPlay)
@@ -32,12 +32,12 @@ void PlayFrame::resizeEvent(QResizeEvent *event)
     }
 }
 
-void PlayFrame::setPlay(const std::shared_ptr<HK_Play> & play)
+void LiveFrame::setPlay(const std::shared_ptr<HK_Play> & play)
 {
     myPlay = play;
 }
 
-bool PlayFrame::event(QEvent *event)
+bool LiveFrame::event(QEvent *event)
 {
     if (event->type() == QEvent::WinIdChange)
     {
@@ -47,12 +47,12 @@ bool PlayFrame::event(QEvent *event)
     return QFrame::event(event);
 }
 
-WId PlayFrame::getWindowHandle() const
+WId LiveFrame::getWindowHandle() const
 {
     return ui->widget->winId();
 }
 
-void PlayFrame::on_snapshot_clicked()
+void LiveFrame::on_snapshot_clicked()
 {
     QSettings settings;
     QDir dir = settings.value("output/pictures", "/tmp/qctv").toString();
@@ -78,14 +78,14 @@ void PlayFrame::on_snapshot_clicked()
     }
 }
 
-void PlayFrame::timerEvent(QTimerEvent *)
+void LiveFrame::timerEvent(QTimerEvent *)
 {
     const qint64 msec = myStartTime.msecsTo(QDateTime::currentDateTime());
     const QTime time = QTime::fromMSecsSinceStartOfDay(msec);
     ui->time->setText(time.toString());
 }
 
-void PlayFrame::on_record_clicked()
+void LiveFrame::on_record_clicked()
 {
     ui->record->setEnabled(false);
     ui->stop->setEnabled(true);
@@ -116,7 +116,7 @@ void PlayFrame::on_record_clicked()
     }
 }
 
-void PlayFrame::on_stop_clicked()
+void LiveFrame::on_stop_clicked()
 {
     ui->record->setEnabled(true);
     ui->stop->setEnabled(false);

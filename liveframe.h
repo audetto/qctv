@@ -5,18 +5,18 @@
 #include <QDateTime>
 
 namespace Ui {
-class PlayFrame;
+class LiveFrame;
 }
 
 class HK_Play;
 
-class PlayFrame : public QFrame
+class LiveFrame : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit PlayFrame(QWidget *parent = nullptr);
-    ~PlayFrame();
+    explicit LiveFrame(QWidget *parent = nullptr);
+    ~LiveFrame();
 
     void setPlay(const std::shared_ptr<HK_Play> & play);
     void resizeEvent(QResizeEvent *event) override;
@@ -35,7 +35,7 @@ private slots:
     void on_stop_clicked();
 
 private:
-    Ui::PlayFrame *ui;
+    Ui::LiveFrame *ui;
     std::shared_ptr<HK_Play> myPlay;
 
     int myTimer;
