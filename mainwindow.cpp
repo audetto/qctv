@@ -28,11 +28,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionPlay_triggered()
 {
-    const size_t channel = 1;
+    if (ui->action1->isChecked())
+    {
+        livePlay(0);
+    }
+    if (ui->action2->isChecked())
+    {
+        livePlay(1);
+    }
+}
+
+void MainWindow::livePlay(const size_t channel)
+{
     LiveFrame * frame = new LiveFrame();
 
     QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
-    const QString title = QString("Live Camera %1").arg(channel);
+    const QString title = QString("Live Camera %1").arg(1 + channel);
     window->setWindowTitle(title);
     window->show();
 

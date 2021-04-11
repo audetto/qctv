@@ -31,6 +31,8 @@ private:
     const std::shared_ptr<HK_DVR> myDVR;
     Ui::MainWindow *ui;
 
+    void livePlay(const size_t channel);
+
 };
 
 #endif // MAINWINDOW_H
