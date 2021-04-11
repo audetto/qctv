@@ -1,5 +1,5 @@
-#ifndef PLAYFRAME_H
-#define PLAYFRAME_H
+#ifndef LIVEFRAME_H
+#define LIVEFRAME_H
 
 #include <QFrame>
 #include <QDateTime>
@@ -28,11 +28,11 @@ protected:
     void timerEvent(QTimerEvent *);
 
 private slots:
-    void on_snapshot_clicked();
-
     void on_record_clicked();
 
     void on_stop_clicked();
+
+    void on_picture_clicked();
 
 private:
     Ui::LiveFrame *ui;
@@ -42,4 +42,4 @@ private:
     QDateTime myStartTime;
 };
 
-#endif // PLAYFRAME_H
+#endif // LIVEFRAME_H

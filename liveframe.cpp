@@ -52,7 +52,7 @@ WId LiveFrame::getWindowHandle() const
     return ui->widget->winId();
 }
 
-void LiveFrame::on_snapshot_clicked()
+void LiveFrame::on_picture_clicked()
 {
     QSettings settings;
     QDir dir = settings.value("output/pictures", "/tmp/qctv").toString();
