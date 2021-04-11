@@ -5,6 +5,7 @@
 #include "hk_sdk.h"
 #include "hk_error.h"
 #include "liveframe.h"
+#include "playbackframe.h"
 #include "utils.h"
 
 #include <QMdiSubWindow>
@@ -70,4 +71,27 @@ void MainWindow::on_actionAbout_triggered()
     const QString playerVersion = QString::fromStdString(HK_SDK::getPlayerVersion());
     const QString message = QString("HCNetSDK\tV%1\nPlayCtrl\tV%2").arg(sdkVersion, playerVersion);
     QMessageBox::about(this, QApplication::applicationName(), message);
+}
+
+void MainWindow::on_actionPlayback_triggered()
+{
+    if (ui->action1->isChecked())
+    {
+        playback(0);
+    }
+    if (ui->action2->isChecked())
+    {
+        playback(1);
+    }
+}
+
+void MainWindow::playback(const size_t channel)
+{
+    PlaybackFrame * frame = new PlaybackFrame(nullptr, myDVR, channel);
+
+    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
+    const QString title = QString("Playback Camera %1").arg(1 + channel);
+    window->setWindowTitle(title);
+    window->show();
+
 }

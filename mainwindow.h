@@ -27,11 +27,14 @@ private slots:
 
     void on_actionAbout_triggered();
 
+    void on_actionPlayback_triggered();
+
 private:
     const std::shared_ptr<HK_DVR> myDVR;
     Ui::MainWindow *ui;
 
     void livePlay(const size_t channel);
+    void playback(const size_t channel);
 
 };
 

@@ -38,6 +38,11 @@ add_executable(qctv
     liveframe.ui
     utils.cpp
     utils.h
+    playbackframe.cpp
+    playbackframe.h
+    playbackframe.ui
+    hk_playback.cpp
+    hk_playback.h
     qctv.qrc
 )
 

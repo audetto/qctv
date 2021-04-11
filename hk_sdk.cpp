@@ -41,6 +41,7 @@ HK_SDK::~HK_SDK()
 
 [[ noreturn ]] void HK_SDK::error(const char * msg)
 {
+    debug(msg);
     throw HK_Error(msg);
 }
 

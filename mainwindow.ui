@@ -61,9 +61,16 @@
     <addaction name="action1"/>
     <addaction name="action2"/>
    </widget>
+   <widget class="QMenu" name="menuPlayback">
+    <property name="title">
+     <string>Playback</string>
+    </property>
+    <addaction name="actionPlayback"/>
+   </widget>
    <addaction name="menuSystem"/>
    <addaction name="menuCameras"/>
    <addaction name="menuLive"/>
+   <addaction name="menuPlayback"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -96,6 +103,11 @@
    </property>
    <property name="text">
     <string>2</string>
+   </property>
+  </action>
+  <action name="actionPlayback">
+   <property name="text">
+    <string>Playback</string>
    </property>
   </action>
  </widget>

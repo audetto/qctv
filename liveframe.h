@@ -19,13 +19,13 @@ public:
     ~LiveFrame();
 
     void setPlay(const std::shared_ptr<HK_LivePlayer> & play);
-    void resizeEvent(QResizeEvent *event) override;
 
     WId getWindowHandle() const;
 
 protected:
     bool event(QEvent *event) override;
-    void timerEvent(QTimerEvent *);
+    void timerEvent(QTimerEvent *) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void on_record_clicked();
