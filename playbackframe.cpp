@@ -36,7 +36,14 @@ void PlaybackFrame::resizeEvent(QResizeEvent *event)
     QFrame::resizeEvent(event);
     if (myPlayback)
     {
-        myPlayback->resize();
+        try
+        {
+            myPlayback->resize();
+        }
+        catch (const HK_Error & error)
+        {
+            showError(this, error);
+        }
     }
 }
 
