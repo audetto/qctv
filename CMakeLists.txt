@@ -17,8 +17,7 @@ set(PLAYER $ENV{HOME}/projects/cctv/player)
 set(SDK_INC ${SDK}/incEn)
 set(SDK_LIB ${SDK}/lib)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
 add_executable(qctv
     main.cpp
@@ -58,7 +57,7 @@ target_link_libraries(qctv PRIVATE
   ${PLAYCTRL}
   )
 
-target_link_libraries(qctv PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(qctv PRIVATE Qt::Widgets)
 
 add_custom_command(TARGET qctv POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${SDK_LIB}/HCNetSDKCom ${CMAKE_BINARY_DIR}/HCNetSDKCom)
