@@ -59,7 +59,7 @@ void PlaybackFrame::on_play_clicked()
 
     try
     {
-        myPlayback = myDVR->getPlayback(myChannel, getWindowHandle(), start, end);
+        myPlayback = myDVR->getPlayback(myChannel, getWindowHandle(), qDateTime2NetDVR(start), qDateTime2NetDVR(end));
         command(NET_DVR_PLAYSTART);
         myTimer = startTimer(1000);
 

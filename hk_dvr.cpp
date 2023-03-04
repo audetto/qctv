@@ -3,8 +3,6 @@
 #include "hk_liveplayer.h"
 #include "hk_playback.h"
 
-#include "utils.h"
-
 #include <cstring>
 
 HK_DVR::HK_DVR(const std::shared_ptr<const HK_SDK> & sdk, const std::string & ip, const WORD port, const std::string & username, const std::string & password)
@@ -60,15 +58,15 @@ std::shared_ptr<HK_LivePlayer> HK_DVR::getLivePlayer(const size_t channel, const
     }
 }
 
-std::shared_ptr<HK_Playback> HK_DVR::getPlayback(const size_t channel, const HWND window, const QDateTime & start, const QDateTime & end) const
+std::shared_ptr<HK_Playback> HK_DVR::getPlayback(const size_t channel, const HWND window, const NET_DVR_TIME_V50 & start, const NET_DVR_TIME_V50 & end) const
 {
     const LONG dChannel = myDeviceInfo.struDeviceV30.byStartDChan + channel;
 
     NET_DVR_VOD_PARA_V50 struVodPara = {};
 
     struVodPara.dwSize                  = sizeof(struVodPara);
-    struVodPara.struBeginTime           = qDateTime2NetDVR(start);
-    struVodPara.struEndTime             = qDateTime2NetDVR(end);
+    struVodPara.struBeginTime           = start;
+    struVodPara.struEndTime             = end;
     struVodPara.struIDInfo.dwSize       = sizeof(struVodPara.struIDInfo);
     struVodPara.struIDInfo.dwChannel    = dChannel;
     struVodPara.hWnd                    = window;

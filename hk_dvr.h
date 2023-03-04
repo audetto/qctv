@@ -5,8 +5,6 @@
 #include <string>
 #include <memory>
 
-#include <QDateTime>
-
 class HK_SDK;
 class HK_LivePlayer;
 class HK_Playback;
@@ -21,7 +19,7 @@ public:
     const NET_DVR_DEVICEINFO_V40 & getDeviceInfo() const;
 
     std::shared_ptr<HK_LivePlayer> getLivePlayer(const size_t channel, const HWND window) const;
-    std::shared_ptr<HK_Playback> getPlayback(const size_t channel, const HWND window, const QDateTime & start, const QDateTime & end) const;
+    std::shared_ptr<HK_Playback> getPlayback(const size_t channel, const HWND window, const NET_DVR_TIME_V50 & start, const NET_DVR_TIME_V50 & end) const;
 
 private:
     const std::shared_ptr<const HK_SDK> mySDK;

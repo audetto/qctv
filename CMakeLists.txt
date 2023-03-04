@@ -32,6 +32,7 @@ add_executable(qctv
     hk_liveplayer.h
     hk_error.cpp
     hk_error.h
+    hk_utils.h
     liveframe.cpp
     liveframe.h
     liveframe.ui
