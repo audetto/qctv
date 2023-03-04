@@ -1,7 +1,7 @@
-#include "hk_liveplayer.h"
-#include "hk_sdk.h"
+#include "sdk/hk_liveplayer.h"
+#include "sdk/hk_sdk.h"
 
-#include "hk_utils.h"
+#include "sdk/hk_utils.h"
 
 HK_LivePlayer::HK_LivePlayer(const LONG handle, const size_t channel)
     : myHandle(handle)

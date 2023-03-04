@@ -6,9 +6,9 @@
 
 #include <iostream>
 
-#include "hk_sdk.h"
-#include "hk_dvr.h"
-#include "hk_error.h"
+#include "sdk/hk_sdk.h"
+#include "sdk/hk_dvr.h"
+#include "sdk/hk_error.h"
 
 int main(int argc, char *argv[])
 {

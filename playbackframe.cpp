@@ -1,9 +1,9 @@
 #include "playbackframe.h"
 #include "ui_playbackframe.h"
 
-#include "hk_dvr.h"
-#include "hk_playback.h"
-#include "hk_error.h"
+#include "sdk/hk_dvr.h"
+#include "sdk/hk_playback.h"
+#include "sdk/hk_error.h"
 
 #include "utils.h"
 

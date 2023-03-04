@@ -1,5 +1,5 @@
-#include "hk_sdk.h"
-#include "hk_error.h"
+#include "sdk/hk_sdk.h"
+#include "sdk/hk_error.h"
 
 #include "HCNetSDK.h"
 #include "PlayM4.h"

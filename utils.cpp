@@ -1,6 +1,6 @@
 #include "utils.h"
 
-#include "hk_error.h"
+#include "sdk/hk_error.h"
 
 #include <QMessageBox>
 #include <QDateTime>

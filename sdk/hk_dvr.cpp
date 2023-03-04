@@ -1,7 +1,7 @@
-#include "hk_dvr.h"
-#include "hk_sdk.h"
-#include "hk_liveplayer.h"
-#include "hk_playback.h"
+#include "sdk/hk_dvr.h"
+#include "sdk/hk_sdk.h"
+#include "sdk/hk_liveplayer.h"
+#include "sdk/hk_playback.h"
 
 #include <cstring>
 

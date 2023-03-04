@@ -1,8 +1,8 @@
 #include "liveframe.h"
 #include "ui_liveframe.h"
 
-#include "hk_liveplayer.h"
-#include "hk_error.h"
+#include "sdk/hk_liveplayer.h"
+#include "sdk/hk_error.h"
 #include "utils.h"
 
 #include <QSettings>

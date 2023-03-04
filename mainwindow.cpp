@@ -1,9 +1,9 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include "hk_dvr.h"
-#include "hk_sdk.h"
-#include "hk_error.h"
+#include "sdk/hk_dvr.h"
+#include "sdk/hk_sdk.h"
+#include "sdk/hk_error.h"
 #include "liveframe.h"
 #include "playbackframe.h"
 #include "utils.h"

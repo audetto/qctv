@@ -1,6 +1,6 @@
-#include "hk_playback.h"
+#include "sdk/hk_playback.h"
 
-#include "hk_sdk.h"
+#include "sdk/hk_sdk.h"
 
 HK_Playback::HK_Playback(const LONG handle)
     : myHandle(handle)

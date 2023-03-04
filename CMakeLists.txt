@@ -20,19 +20,22 @@ set(SDK_LIB ${SDK}/lib)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
 add_executable(qctv
+    sdk/hk_sdk.cpp
+    sdk/hk_sdk.h
+    sdk/hk_dvr.cpp
+    sdk/hk_dvr.h
+    sdk/hk_liveplayer.cpp
+    sdk/hk_liveplayer.h
+    sdk/hk_error.cpp
+    sdk/hk_error.h
+    sdk/hk_utils.h
+    sdk/hk_playback.cpp
+    sdk/hk_playback.h
+
     main.cpp
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-    hk_sdk.cpp
-    hk_sdk.h
-    hk_dvr.cpp
-    hk_dvr.h
-    hk_liveplayer.cpp
-    hk_liveplayer.h
-    hk_error.cpp
-    hk_error.h
-    hk_utils.h
     liveframe.cpp
     liveframe.h
     liveframe.ui
@@ -41,8 +44,6 @@ add_executable(qctv
     playbackframe.cpp
     playbackframe.h
     playbackframe.ui
-    hk_playback.cpp
-    hk_playback.h
     qctv.qrc
 )
 
