@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
 
@@ -37,5 +36,3 @@ private:
     void playback(const size_t channel);
 
 };
-
-#endif // MAINWINDOW_H

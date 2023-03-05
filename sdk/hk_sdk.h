@@ -1,5 +1,4 @@
-#ifndef HK_SDK_H
-#define HK_SDK_H
+#pragma once
 
 #include <string>
 
@@ -17,6 +16,3 @@ public:
     static void debug(const char * msg);
 
 };
-
-
-#endif // HK_SDK_H

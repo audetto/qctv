@@ -1,5 +1,4 @@
-#ifndef UTILS_H
-#define UTILS_H
+#pragma once
 
 #include "HCNetSDK.h"
 
@@ -15,5 +14,3 @@ void showError(QWidget *parent, const HK_Error & error);
 NET_DVR_TIME_V50 qDateTime2NetDVR(const QDateTime & datetime);
 
 QDateTime netDVR2QDateTime(const NET_DVR_TIME & dvr);
-
-#endif // UTILS_H

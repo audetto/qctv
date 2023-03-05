@@ -1,5 +1,4 @@
-#ifndef HK_PLAYBACK_H
-#define HK_PLAYBACK_H
+#pragma once
 
 #include "HCNetSDK.h"
 
@@ -18,5 +17,3 @@ public:
 private:
     const LONG myHandle;
 };
-
-#endif // HK_PLAYBACK_H

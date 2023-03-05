@@ -1,5 +1,4 @@
-#ifndef HK_LIVEPLAYER_H
-#define HK_LIVEPLAYER_H
+#pragma once
 
 #include "HCNetSDK.h"
 
@@ -24,5 +23,3 @@ private:
     const size_t myChannel;
     bool myRecording;
 };
-
-#endif // HK_LIVEPLAYER_H

@@ -1,5 +1,4 @@
-#ifndef HK_ERROR_H
-#define HK_ERROR_H
+#pragma once
 
 #include "HCNetSDK.h"
 
@@ -17,6 +16,3 @@ private:
     const LONG myError;
     const char * myMessage;
 };
-
-
-#endif // HK_ERROR_H

@@ -1,5 +1,4 @@
-#ifndef PLAYBACKFRAME_H
-#define PLAYBACKFRAME_H
+#pragma once
 
 #include <QFrame>
 
@@ -48,5 +47,3 @@ private:
     void command(const DWORD cmd);
     QString getLogSpeedString() const;
 };
-
-#endif // PLAYBACKFRAME_H

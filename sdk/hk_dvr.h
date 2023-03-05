@@ -1,5 +1,4 @@
-#ifndef HK_DVR_H
-#define HK_DVR_H
+#pragma once
 
 #include "HCNetSDK.h"
 #include <string>
@@ -26,5 +25,3 @@ private:
     LONG myUserID;
     NET_DVR_DEVICEINFO_V40 myDeviceInfo;
 };
-
-#endif // HK_DVR_H

@@ -1,5 +1,4 @@
-#ifndef LIVEFRAME_H
-#define LIVEFRAME_H
+#pragma once
 
 #include <QFrame>
 #include <QDateTime>
@@ -41,5 +40,3 @@ private:
     int myTimer;
     QDateTime myStartTime;
 };
-
-#endif // LIVEFRAME_H
