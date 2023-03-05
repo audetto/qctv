@@ -39,20 +39,16 @@ HK_SDK::~HK_SDK()
     NET_DVR_Cleanup();
 }
 
-[[ noreturn ]] void HK_SDK::error(const char * msg)
+[[ noreturn ]] void HK_SDK::error(const char * function)
 {
-    debug(msg);
-    throw HK_Error(msg);
+    throw debug(function);
 }
 
-void HK_SDK::debug(const char * msg)
+HK_Error HK_SDK::debug(const char * function)
 {
-    LONG err = NET_DVR_GetLastError();
-    std::ostringstream ss;
-
-    ss << msg << ": " << err;
-    ss << " = " << NET_DVR_GetErrorMsg(&err);
-    std::cerr << ss.str() << std::endl;
+    const HK_Error err = HK_Error::create(function);
+    std::cerr << err.what() << std::endl;
+    return err;
 }
 
 std::string HK_SDK::getSDKVersion()

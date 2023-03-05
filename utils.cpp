@@ -7,7 +7,11 @@
 
 void showError(QWidget *parent, const HK_Error & error)
 {
-    const QString msg = QString("Last error = %1\n%2").arg(QString::number(error.getError()), QString::fromUtf8(error.getMessage()));
+    const QString msg = QString("%1\nError: %2\n%3").arg(
+        QString::fromUtf8(error.getFunction()),
+        QString::number(error.getError()), 
+        QString::fromStdString(error.getHKMessage()));
+
     QMessageBox::critical(parent, QString::fromUtf8(error.what()), msg);
 }
 

@@ -79,22 +79,33 @@ void PlaybackFrame::on_play_clicked()
     }
 }
 
-void PlaybackFrame::command(const DWORD cmd)
+bool PlaybackFrame::command(const DWORD cmd)
 {
     if (myPlayback)
     {
         try
         {
             myPlayback->command(cmd);
+            return true;
         }
         catch (const HK_Error & error)
         {
             showError(this, error);
+            return false;
         }
+    }
+    else
+    {
+        return false;
     }
 }
 
 void PlaybackFrame::on_stop_clicked()
+{
+    resetPlayback();
+}
+
+void PlaybackFrame::resetPlayback()
 {
     ui->play->setEnabled(true);
     ui->dateTimeEdit->setEnabled(true);
@@ -123,9 +134,8 @@ void PlaybackFrame::timerEvent(QTimerEvent *)
         }
         catch (const HK_Error & error)
         {
+            resetPlayback();
             showError(this, error);
-            killTimer(myTimer);
-            myTimer = 0;
         }
     }
 }
@@ -139,20 +149,26 @@ QString PlaybackFrame::getLogSpeedString() const
 
 void PlaybackFrame::on_fast_clicked()
 {
-    command(NET_DVR_PLAYFAST);
-    ++myLogSpeed;
+    if (command(NET_DVR_PLAYFAST))
+    {
+        ++myLogSpeed;
+    }
 }
 
 void PlaybackFrame::on_slow_clicked()
 {
-    command(NET_DVR_PLAYSLOW);
-    --myLogSpeed;
+    if (command(NET_DVR_PLAYSLOW))
+    {
+        --myLogSpeed;
+    }
 }
 
 void PlaybackFrame::on_normal_clicked()
 {
-    command(NET_DVR_PLAYNORMAL);
-    myLogSpeed = 0;
+    if (command(NET_DVR_PLAYNORMAL))
+    {
+        myLogSpeed = 0;
+    }
 }
 
 void PlaybackFrame::on_pause_clicked()

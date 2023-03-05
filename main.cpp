@@ -8,7 +8,7 @@
 
 #include "sdk/hk_sdk.h"
 #include "sdk/hk_dvr.h"
-#include "sdk/hk_error.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -50,10 +50,6 @@ int main(int argc, char *argv[])
         MainWindow w(nullptr, dvr);
         w.show();
         return a.exec();
-    }
-    catch (const HK_Error & e)
-    {
-        std::cerr << e.what() << ": " << e.getError() << " = " << e.getMessage() << std::endl;
     }
     catch (const std::exception & e)
     {

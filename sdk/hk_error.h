@@ -3,16 +3,21 @@
 #include "HCNetSDK.h"
 
 #include <stdexcept>
+#include <string>
+
 
 class HK_Error : public std::runtime_error
 {
 public:
-    HK_Error(const char * function);
+    static HK_Error create(const char * function);
 
     LONG getError() const;
-
-    const char * getMessage() const;
+    const char * getFunction() const;
+    const std::string & getHKMessage() const;
 private:
+    HK_Error(std::string full, const char * function, const LONG error, std::string hk);
+
+    const char * myFunction;
     const LONG myError;
-    const char * myMessage;
+    const std::string myHK;
 };

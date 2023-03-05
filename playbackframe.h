@@ -44,6 +44,7 @@ private:
     int myLogSpeed;
 
     WId getWindowHandle() const;
-    void command(const DWORD cmd);
+    bool command(const DWORD cmd);
+    void resetPlayback();
     QString getLogSpeedString() const;
 };
