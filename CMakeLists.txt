@@ -31,6 +31,8 @@ add_executable(qctv
     sdk/hk_utils.h
     sdk/hk_playback.cpp
     sdk/hk_playback.h
+    sdk/hk_callback.cpp
+    sdk/hk_callback.h
 
     main.cpp
     mainwindow.cpp

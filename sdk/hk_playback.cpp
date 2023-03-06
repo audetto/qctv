@@ -2,8 +2,9 @@
 
 #include "sdk/hk_sdk.h"
 
-HK_Playback::HK_Playback(const LONG handle)
+HK_Playback::HK_Playback(const LONG handle, const std::shared_ptr<const HK_Callback_V40> & callback)
     : myHandle(handle)
+    , myKeepAliveCallback(callback)
 {
 
 }
