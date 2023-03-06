@@ -27,7 +27,7 @@ void HK_Playback::command(const DWORD command)
     }
 }
 
-NET_DVR_TIME HK_Playback::getOSDTime()
+NET_DVR_TIME HK_Playback::getOSDTime() const
 {
     NET_DVR_TIME osd = {};
     if (!NET_DVR_GetPlayBackOsdTime(myHandle, &osd))
@@ -35,4 +35,9 @@ NET_DVR_TIME HK_Playback::getOSDTime()
         HK_SDK::error("NET_DVR_GetPlayBackOsdTime");
     }
     return osd;
- }
+}
+
+LONG HK_Playback::getDownloadPos() const
+{
+    return NET_DVR_GetDownloadPos(myHandle);
+}
