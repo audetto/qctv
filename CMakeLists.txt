@@ -46,6 +46,9 @@ add_executable(qctv
     playbackframe.cpp
     playbackframe.h
     playbackframe.ui
+    downloadframe.cpp
+    downloadframe.h
+    downloadframe.ui
     qctv.qrc
 )
 

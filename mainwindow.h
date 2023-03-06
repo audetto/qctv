@@ -20,13 +20,15 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_actionPlay_triggered();
+    void on_actionLive_triggered();
 
     void on_actionAbout_Qt_triggered();
 
     void on_actionAbout_triggered();
 
     void on_actionPlayback_triggered();
+
+    void on_actionDownload_triggered();
 
 private:
     const std::shared_ptr<HK_DVR> myDVR;

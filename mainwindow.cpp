@@ -6,6 +6,7 @@
 #include "sdk/hk_error.h"
 #include "liveframe.h"
 #include "playbackframe.h"
+#include "downloadframe.h"
 #include "utils.h"
 
 #include <QMdiSubWindow>
@@ -27,7 +28,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_actionPlay_triggered()
+void MainWindow::on_actionLive_triggered()
 {
     if (ui->action1->isChecked())
     {
@@ -93,5 +94,13 @@ void MainWindow::playback(const size_t channel)
     const QString title = QString("Playback Camera %1").arg(1 + channel);
     window->setWindowTitle(title);
     window->show();
+}
 
+void MainWindow::on_actionDownload_triggered()
+{
+    DownloadFrame * frame = new DownloadFrame();
+
+    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
+    window->setWindowTitle("Download video");
+    window->show();
 }

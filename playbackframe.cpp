@@ -17,7 +17,7 @@ PlaybackFrame::PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dv
 {
     ui->setupUi(this);
     const QDateTime start = QDateTime::currentDateTime().addDays(-1);
-    ui->dateTimeEdit->setDateTime(start);
+    ui->startDateTime->setDateTime(start);
     ui->speed->setText(getLogSpeedString());
 }
 
@@ -54,7 +54,7 @@ void PlaybackFrame::on_play_clicked()
     myTimer = 0;
     myLogSpeed = 0;
 
-    const QDateTime start = ui->dateTimeEdit->dateTime();
+    const QDateTime start = ui->startDateTime->dateTime();
     const QDateTime end = start.addMSecs(1000 * 3600);
 
     try
@@ -66,7 +66,7 @@ void PlaybackFrame::on_play_clicked()
         myTimer = startTimer(1000);
 
         ui->play->setEnabled(false);
-        ui->dateTimeEdit->setEnabled(false);
+        ui->startDateTime->setEnabled(false);
 
         ui->stop->setEnabled(true);
         ui->fast->setEnabled(true);
@@ -110,7 +110,7 @@ void PlaybackFrame::on_stop_clicked()
 void PlaybackFrame::resetPlayback()
 {
     ui->play->setEnabled(true);
-    ui->dateTimeEdit->setEnabled(true);
+    ui->startDateTime->setEnabled(true);
 
     ui->stop->setEnabled(false);
     ui->fast->setEnabled(false);
@@ -131,7 +131,7 @@ void PlaybackFrame::timerEvent(QTimerEvent *)
         try
         {
             const QDateTime osd = netDVR2QDateTime(myPlayback->getOSDTime());
-            ui->dateTimeEdit->setDateTime(osd);
+            ui->startDateTime->setDateTime(osd);
             ui->speed->setText(getLogSpeedString());
         }
         catch (const HK_Error & error)
