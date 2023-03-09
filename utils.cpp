@@ -12,7 +12,7 @@ void showError(QWidget *parent, const HK_Error & error)
         QString::number(error.getError()), 
         QString::fromStdString(error.getHKMessage()));
 
-    QMessageBox::critical(parent, QString::fromUtf8(error.what()), msg);
+    QMessageBox::critical(parent, "Error", msg);
 }
 
 NET_DVR_TIME_V50 qDateTime2NetDVR(const QDateTime & datetime)

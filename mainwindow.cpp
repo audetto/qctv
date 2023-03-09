@@ -98,7 +98,7 @@ void MainWindow::playback(const size_t channel)
 
 void MainWindow::on_actionDownload_triggered()
 {
-    DownloadFrame * frame = new DownloadFrame();
+    DownloadFrame * frame = new DownloadFrame(nullptr, myDVR);
 
     QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
     window->setWindowTitle("Download video");

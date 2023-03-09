@@ -16,7 +16,7 @@ public:
     void command(const DWORD command);
 
     NET_DVR_TIME getOSDTime() const;
-    LONG getDownloadPos() const;
+    size_t getDownloadPos() const;
 
 private:
     const LONG myHandle;

@@ -43,6 +43,8 @@ add_executable(qctv
     liveframe.ui
     utils.cpp
     utils.h
+    receiver.cpp
+    receiver.h
     playbackframe.cpp
     playbackframe.h
     playbackframe.ui

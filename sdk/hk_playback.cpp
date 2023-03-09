@@ -37,7 +37,7 @@ NET_DVR_TIME HK_Playback::getOSDTime() const
     return osd;
 }
 
-LONG HK_Playback::getDownloadPos() const
+size_t HK_Playback::getDownloadPos() const
 {
     return NET_DVR_GetDownloadPos(myHandle);
 }

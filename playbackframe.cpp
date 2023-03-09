@@ -77,6 +77,7 @@ void PlaybackFrame::on_play_clicked()
     }
     catch (const HK_Error & error)
     {
+        resetPlayback();
         showError(this, error);
     }
 }
