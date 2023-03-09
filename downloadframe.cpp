@@ -13,7 +13,7 @@
 #include <QCloseEvent>
 
 
-DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
+DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr, const std::optional<size_t> channel, const QDateTime & start)
     : QWidget(parent)
     , ui(new Ui::DownloadFrame)
     , myDVR(dvr)
@@ -22,7 +22,11 @@ DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dv
 {
     ui->setupUi(this);
 
-    const QDateTime start = QDateTime::currentDateTime().addDays(-1);
+    if (channel)
+    {
+        ui->camera->setCurrentIndex(*channel);
+    }
+
     ui->startDateTime->setDateTime(start);
 
     const QDateTime end = start.addMSecs(1000 * 60 * 10);  // 10 minute

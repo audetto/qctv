@@ -3,6 +3,7 @@
 #include <QMainWindow>
 
 #include <memory>
+#include <optional>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,11 +31,12 @@ private slots:
 
     void on_actionDownload_triggered();
 
+    void openDownloadOnChannel(const std::optional<size_t> channel, const QDateTime & start);
+
 private:
     const std::shared_ptr<HK_DVR> myDVR;
     Ui::MainWindow *ui;
 
     void livePlay(const size_t channel);
     void playback(const size_t channel);
-
 };

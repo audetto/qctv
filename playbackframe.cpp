@@ -183,3 +183,8 @@ void PlaybackFrame::on_step_clicked()
 {
     command(NET_DVR_PLAYFRAME);
 }
+
+void PlaybackFrame::on_download_clicked()
+{
+    emit downloadOnChannel(myChannel, ui->startDateTime->dateTime());
+}

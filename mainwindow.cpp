@@ -89,6 +89,7 @@ void MainWindow::on_actionPlayback_triggered()
 void MainWindow::playback(const size_t channel)
 {
     PlaybackFrame * frame = new PlaybackFrame(nullptr, myDVR, channel);
+    QObject::connect(frame, &PlaybackFrame::downloadOnChannel, this, &MainWindow::openDownloadOnChannel);
 
     QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
     const QString title = QString("Playback Camera %1").arg(1 + channel);
@@ -98,7 +99,13 @@ void MainWindow::playback(const size_t channel)
 
 void MainWindow::on_actionDownload_triggered()
 {
-    DownloadFrame * frame = new DownloadFrame(nullptr, myDVR);
+    const QDateTime start = QDateTime::currentDateTime().addDays(-1);
+    openDownloadOnChannel(std::nullopt, start);
+}
+
+void MainWindow::openDownloadOnChannel(const std::optional<size_t> channel, const QDateTime & start)
+{
+    DownloadFrame * frame = new DownloadFrame(nullptr, myDVR, channel, start);
 
     QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
     window->setWindowTitle("Download video");
