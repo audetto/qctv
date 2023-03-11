@@ -90,3 +90,17 @@ std::shared_ptr<HK_Playback> HK_DVR::getPlayback(const size_t channel, const HWN
 
     return std::make_shared<HK_Playback>(hPlayback, callback);
 }
+
+void HK_DVR::getDeviceAbility(const DWORD dwAbilityType, std::vector<char> & in, std::vector<char> & out) const
+{
+    const BOOL ret = NET_DVR_GetDeviceAbility(myUserID, dwAbilityType, in.data(), in.size(), out.data(), out.size());
+    if (!ret)
+    {
+        HK_SDK::error("NET_DVR_GetDeviceAbility");
+    }
+}
+
+LONG HK_DVR::getDigitalChannel(const size_t channel) const
+{
+    return myDeviceInfo.struDeviceV30.byStartDChan + channel;
+}

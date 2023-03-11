@@ -51,6 +51,9 @@ add_executable(qctv
     downloadframe.cpp
     downloadframe.h
     downloadframe.ui
+    abilityviewer.cpp
+    abilityviewer.h
+    abilityviewer.ui
     qctv.qrc
 )
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<JpegCaptureAbility version="2.0">
+    <channelNO>${CHANNEL}</channelNO>
+    <!--req,channel number-->
+    <!--opt, it supports to specify returning the content of which node, and the specified node could be the next level of root node --> 
+</JpegCaptureAbility>

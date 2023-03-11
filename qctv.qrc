@@ -1,5 +1,20 @@
 <RCC>
-    <qresource prefix="/">
-        <file>hk.ico</file>
+    <qresource>
+        <file>resources/hk.ico</file>
+    </qresource>
+    <qresource>
+        <file>resources/user_ability_input.xml</file>
+    </qresource>
+    <qresource>
+        <file>resources/stream_ability_input.xml</file>
+    </qresource>
+    <qresource>
+        <file>resources/dynchan_ability_input.xml</file>
+    </qresource>
+    <qresource>
+        <file>resources/videopic_ability_input.xml</file>
+    </qresource>
+    <qresource>
+        <file>resources/jpeg_cap_ability_input.xml</file>
     </qresource>
 </RCC>

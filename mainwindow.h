@@ -33,6 +33,8 @@ private slots:
 
     void openDownloadOnChannel(const std::optional<size_t> channel, const QDateTime & start);
 
+    void on_actionAbilities_triggered();
+
 private:
     const std::shared_ptr<HK_DVR> myDVR;
     Ui::MainWindow *ui;

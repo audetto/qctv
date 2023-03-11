@@ -43,6 +43,8 @@
     <addaction name="actionLive"/>
     <addaction name="actionPlayback"/>
     <addaction name="actionDownload"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbilities"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -102,6 +104,11 @@
   <action name="actionDownload">
    <property name="text">
     <string>Download</string>
+   </property>
+  </action>
+  <action name="actionAbilities">
+   <property name="text">
+    <string>Abilities</string>
    </property>
   </action>
  </widget>

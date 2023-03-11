@@ -7,6 +7,7 @@
 #include "liveframe.h"
 #include "playbackframe.h"
 #include "downloadframe.h"
+#include "abilityviewer.h"
 #include "utils.h"
 
 #include <QMdiSubWindow>
@@ -19,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
 {
     ui->setupUi(this);
 
-    QIcon icon(QIcon::fromTheme(":/hk.ico"));
+    QIcon icon(QIcon::fromTheme(":/resources/hk.ico"));
     this->setWindowIcon(icon);
 }
 
@@ -109,5 +110,14 @@ void MainWindow::openDownloadOnChannel(const std::optional<size_t> channel, cons
 
     QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
     window->setWindowTitle("Download video");
+    window->show();
+}
+
+void MainWindow::on_actionAbilities_triggered()
+{
+    AbilityViewer * frame = new AbilityViewer(nullptr, myDVR);
+
+    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
+    window->setWindowTitle("Ability viewer");
     window->show();
 }
