@@ -15,8 +15,8 @@
 
 MainWindow::MainWindow(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
     : QMainWindow(parent)
-    , myDVR(dvr)
     , ui(new Ui::MainWindow)
+    , myDVR(dvr)
 {
     ui->setupUi(this);
 

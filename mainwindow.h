@@ -5,9 +5,9 @@
 #include <memory>
 #include <optional>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+namespace Ui {
+class MainWindow;
+}
 
 class HK_DVR;
 class HK_Error;
@@ -36,8 +36,8 @@ private slots:
     void on_actionAbilities_triggered();
 
 private:
-    const std::shared_ptr<HK_DVR> myDVR;
     Ui::MainWindow *ui;
+    const std::shared_ptr<HK_DVR> myDVR;
 
     void livePlay(const size_t channel);
     void playback(const size_t channel);
