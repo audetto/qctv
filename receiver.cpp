@@ -10,7 +10,7 @@ Receiver::Receiver(const QString & name)
     }
 }
 
-void Receiver::moreData(LONG lPlayHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize)
+void Receiver::moreData(const LONG lPlayHandle, const DWORD dwDataType, const BYTE *pBuffer, const DWORD dwBufSize)
 {
     // would be nice to send the data via the signal, but we do not own it
     // so we would have to copy it

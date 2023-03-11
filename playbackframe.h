@@ -24,7 +24,7 @@ signals:
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
-    void timerEvent(QTimerEvent *) override;
+    void timerEvent(QTimerEvent *event) override;
 
 private slots:
     void on_play_clicked();
