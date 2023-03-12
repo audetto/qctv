@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
-    <height>406</height>
+    <width>857</width>
+    <height>428</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,6 +49,16 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="fast">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Fast</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="2">
        <widget class="QPushButton" name="pause">
         <property name="enabled">
@@ -56,20 +66,6 @@
         </property>
         <property name="text">
          <string>Pause</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QDateTimeEdit" name="startDateTime">
-        <property name="displayFormat">
-         <string>dd/MM/yyyy HH:mm:ss</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="play">
-        <property name="text">
-         <string>Play</string>
         </property>
        </widget>
       </item>
@@ -83,13 +79,10 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="4">
-       <widget class="QPushButton" name="normal">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Normal</string>
+      <item row="0" column="0">
+       <widget class="QDateTimeEdit" name="startDateTime">
+        <property name="displayFormat">
+         <string>dd/MM/yyyy HH:mm:ss</string>
         </property>
        </widget>
       </item>
@@ -100,16 +93,6 @@
         </property>
         <property name="text">
          <string>Slow</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="fast">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Fast</string>
         </property>
        </widget>
       </item>
@@ -128,6 +111,59 @@
         <property name="text">
          <string>Download</string>
         </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="normal">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Normal</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="play">
+        <property name="text">
+         <string>Play</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="5">
+       <widget class="QProgressBar" name="progress">
+        <property name="value">
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5" rowspan="3">
+       <widget class="QGroupBox" name="direction">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="title">
+         <string>Direction</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QRadioButton" name="forward">
+           <property name="text">
+            <string>Forward</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="reverse">
+           <property name="text">
+            <string>Reverse</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>

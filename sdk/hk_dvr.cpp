@@ -91,6 +91,27 @@ std::shared_ptr<HK_Playback> HK_DVR::getPlayback(const size_t channel, const HWN
     return std::make_shared<HK_Playback>(hPlayback, callback);
 }
 
+std::shared_ptr<HK_Playback> HK_DVR::getReversePlayback(const size_t channel, const HWND window, const NET_DVR_TIME & start,
+    const NET_DVR_TIME & end) const
+{
+    const LONG dChannel = myDeviceInfo.struDeviceV30.byStartDChan + channel;
+
+    NET_DVR_PLAYCOND struVodPara = {};
+
+    struVodPara.dwChannel               = dChannel;
+    struVodPara.struStartTime           = start;
+    struVodPara.struStopTime            = end;
+
+    const LONG hPlayback = NET_DVR_PlayBackReverseByTime_V40(myUserID, window, &struVodPara);
+
+    if (hPlayback < 0)
+    {
+        HK_SDK::error("NET_DVR_PlayBackReverseByTime_V40");
+    }
+
+    return std::make_shared<HK_Playback>(hPlayback, nullptr);
+}
+
 void HK_DVR::getDeviceAbility(const DWORD dwAbilityType, std::vector<char> & in, std::vector<char> & out) const
 {
     const BOOL ret = NET_DVR_GetDeviceAbility(myUserID, dwAbilityType, in.data(), in.size(), out.data(), out.size());

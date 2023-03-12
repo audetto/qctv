@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QFrame>
+#include <QDateTime>
 
 #include "HCNetSDK.h"
 
@@ -43,6 +44,7 @@ private:
     const size_t myChannel;
 
     std::shared_ptr<HK_Playback> myPlayback;
+    QDateTime myOrgStart;
 
     int myTimer;
     int myLogSpeed;
@@ -50,5 +52,6 @@ private:
     WId getWindowHandle() const;
     bool command(const DWORD cmd);
     void resetPlayback();
+    void syncControls(const bool enabled);
     QString getLogSpeedString() const;
 };

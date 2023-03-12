@@ -54,26 +54,30 @@ void PlaybackFrame::on_play_clicked()
     myTimer = 0;
     myLogSpeed = 0;
 
-    const QDateTime start = ui->startDateTime->dateTime();
-    const QDateTime end = start.addMSecs(1000 * 3600);
+    myOrgStart = ui->startDateTime->dateTime();
+    const QDateTime end = myOrgStart.addMSecs(1000 * 600);
 
     try
     {
-        myPlayback = myDVR->getPlayback(myChannel, getWindowHandle(), 
-            qDateTime2NetDVR(start), qDateTime2NetDVR(end),
-            nullptr);
+        if (ui->forward->isChecked())
+        {
+            myPlayback = myDVR->getPlayback(myChannel, getWindowHandle(), 
+                qDateTime2NetDVR50(myOrgStart), qDateTime2NetDVR50(end),
+                nullptr);
+        }
+        else
+        {
+            myPlayback = myDVR->getReversePlayback(myChannel, getWindowHandle(), 
+                qDateTime2NetDVR(myOrgStart), qDateTime2NetDVR(end));
+        }
+
         command(NET_DVR_PLAYSTART);
         myTimer = startTimer(1000);
 
-        ui->play->setEnabled(false);
-        ui->startDateTime->setEnabled(false);
+        ui->progress->setMaximum(myOrgStart.secsTo(end));
+        ui->progress->setValue(0);
 
-        ui->stop->setEnabled(true);
-        ui->fast->setEnabled(true);
-        ui->slow->setEnabled(true);
-        ui->pause->setEnabled(true);
-        ui->step->setEnabled(true);
-        ui->normal->setEnabled(true);
+        syncControls(false);
     }
     catch (const HK_Error & error)
     {
@@ -110,15 +114,7 @@ void PlaybackFrame::on_stop_clicked()
 
 void PlaybackFrame::resetPlayback()
 {
-    ui->play->setEnabled(true);
-    ui->startDateTime->setEnabled(true);
-
-    ui->stop->setEnabled(false);
-    ui->fast->setEnabled(false);
-    ui->slow->setEnabled(false);
-    ui->pause->setEnabled(false);
-    ui->step->setEnabled(false);
-    ui->normal->setEnabled(false);
+    syncControls(true);
 
     myPlayback.reset();
     killTimer(myTimer);
@@ -132,6 +128,7 @@ void PlaybackFrame::timerEvent(QTimerEvent *)
         try
         {
             const QDateTime osd = netDVR2QDateTime(myPlayback->getOSDTime());
+            ui->progress->setValue(myOrgStart.secsTo(osd));
             ui->startDateTime->setDateTime(osd);
             ui->speed->setText(getLogSpeedString());
         }
@@ -187,4 +184,18 @@ void PlaybackFrame::on_step_clicked()
 void PlaybackFrame::on_download_clicked()
 {
     emit downloadOnChannel(myChannel, ui->startDateTime->dateTime());
+}
+
+void PlaybackFrame::syncControls(const bool enabled)
+{
+    ui->play->setEnabled(false != enabled);
+    ui->startDateTime->setEnabled(false != enabled);
+    ui->direction->setEnabled(false != enabled);
+
+    ui->stop->setEnabled(true != enabled);
+    ui->fast->setEnabled(true != enabled);
+    ui->slow->setEnabled(true != enabled);
+    ui->pause->setEnabled(true != enabled);
+    ui->step->setEnabled(true != enabled);
+    ui->normal->setEnabled(true != enabled);
 }
