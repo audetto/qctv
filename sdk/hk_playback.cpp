@@ -19,9 +19,9 @@ void HK_Playback::resize()
     command(NET_DVR_CHANGEWNDRESOLUTION);
 }
 
-void HK_Playback::command(const DWORD command)
+void HK_Playback::command(const DWORD command, void * ptr, const size_t len)
 {
-    if (!NET_DVR_PlayBackControl_V40(myHandle, command, nullptr, 0, nullptr, nullptr))
+    if (!NET_DVR_PlayBackControl_V40(myHandle, command, ptr, len, nullptr, nullptr))
     {
         HK_SDK::error("NET_DVR_PlayBackControl_V40");
     }

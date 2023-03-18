@@ -8,6 +8,7 @@
 #include "playbackframe.h"
 #include "downloadframe.h"
 #include "abilityviewer.h"
+#include "filebrowser.h"
 #include "utils.h"
 
 #include <QMdiSubWindow>
@@ -119,5 +120,14 @@ void MainWindow::on_actionAbilities_triggered()
 
     QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
     window->setWindowTitle("Ability viewer");
+    window->show();
+}
+
+void MainWindow::on_actionBrowse_triggered()
+{
+    FileBrowser * frame = new FileBrowser(nullptr, myDVR);
+
+    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
+    window->setWindowTitle("File browser");
     window->show();
 }

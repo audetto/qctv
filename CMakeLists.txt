@@ -54,6 +54,9 @@ add_executable(qctv
     abilityviewer.cpp
     abilityviewer.h
     abilityviewer.ui
+    filebrowser.cpp
+    filebrowser.h
+    filebrowser.ui
     qctv.qrc
 )
 

@@ -49,9 +49,50 @@ NET_DVR_TIME qDateTime2NetDVR(const QDateTime & datetime)
     return dvrTime;
 }
 
+NET_DVR_TIME_EX qDateTime2NetDVREX(const QDateTime & datetime)
+{
+    NET_DVR_TIME_EX dvrTime = {};
+
+    const QDate & date = datetime.date();
+    dvrTime.wYear = date.year();
+    dvrTime.byMonth = date.month();
+    dvrTime.byDay = date.day();
+
+    const QTime & time = datetime.time();
+    dvrTime.byHour = time.hour();
+    dvrTime.byMinute = time.minute();
+    dvrTime.bySecond = time.second();
+
+    return dvrTime;
+}
+
+NET_DVR_TIME_SEARCH_COND qDateTime2NetDVRSearchCond(const QDateTime & datetime)
+{
+    NET_DVR_TIME_SEARCH_COND dvrTime = {};
+
+    const QDate & date = datetime.date();
+    dvrTime.wYear = date.year();
+    dvrTime.byMonth = date.month();
+    dvrTime.byDay = date.day();
+
+    const QTime & time = datetime.time();
+    dvrTime.byHour = time.hour();
+    dvrTime.byMinute = time.minute();
+    dvrTime.bySecond = time.second();
+
+    return dvrTime;
+}
+
 QDateTime netDVR2QDateTime(const NET_DVR_TIME & dvr)
 {
     const QDate date(dvr.dwYear, dvr.dwMonth, dvr.dwDay);
     const QTime time(dvr.dwHour, dvr.dwMinute, dvr.dwSecond);
+    return QDateTime(date, time);
+}
+
+QDateTime netDVR2QDateTime(const NET_DVR_TIME_SEARCH & dvr)
+{
+    const QDate date(dvr.wYear, dvr.byMonth, dvr.byDay);
+    const QTime time(dvr.byHour, dvr.byMinute, dvr.bySecond);
     return QDateTime(date, time);
 }

@@ -112,6 +112,24 @@ std::shared_ptr<HK_Playback> HK_DVR::getReversePlayback(const size_t channel, co
     return std::make_shared<HK_Playback>(hPlayback, nullptr);
 }
 
+std::shared_ptr<HK_Playback> HK_DVR::getPlayback(const std::string & filname, const HWND window) const
+{
+    NET_DVR_PLAY_BY_NAME_PARA struPara = {};
+
+    strncpy(struPara.szFileName, filname.c_str(), sizeof(struPara.szFileName));
+    struPara.szFileName[sizeof(struPara.szFileName) - 1] = '\0';
+    struPara.hWnd = window;
+
+    const LONG hPlayback = NET_DVR_PlayBackByName_V50(myUserID, &struPara);
+
+    if (hPlayback < 0)
+    {
+        HK_SDK::error("NET_DVR_PlayBackByName_V50");
+    }
+
+    return std::make_shared<HK_Playback>(hPlayback, nullptr);
+}
+
 void HK_DVR::getDeviceAbility(const DWORD dwAbilityType, std::vector<char> & in, std::vector<char> & out) const
 {
     const BOOL ret = NET_DVR_GetDeviceAbility(myUserID, dwAbilityType, in.data(), in.size(), out.data(), out.size());
@@ -124,4 +142,46 @@ void HK_DVR::getDeviceAbility(const DWORD dwAbilityType, std::vector<char> & in,
 LONG HK_DVR::getDigitalChannel(const size_t channel) const
 {
     return myDeviceInfo.struDeviceV30.byStartDChan + channel;
+}
+
+std::vector<NET_DVR_FINDDATA_V50> HK_DVR::findFiles(const size_t channel, const NET_DVR_TIME_SEARCH_COND & start, const NET_DVR_TIME_SEARCH_COND & end) const
+{
+    const LONG dChannel = myDeviceInfo.struDeviceV30.byStartDChan + channel;
+
+    NET_DVR_FILECOND_V50 fileCond = {};
+    fileCond.struStreamID.dwChannel = dChannel;
+    fileCond.dwFileType = 0xFF;
+    fileCond.struStartTime = start;
+    fileCond.struStopTime = end;
+    const LONG lFindHandle = NET_DVR_FindFile_V50(myUserID, &fileCond);
+    if (lFindHandle < 0)
+    {
+        HK_SDK::error("NET_DVR_FindFile_V50");
+    }
+
+    std::vector<NET_DVR_FINDDATA_V50> files;
+    bool cont = true;
+    while (cont)
+    {
+        NET_DVR_FINDDATA_V50 struFileData;
+        const LONG result = NET_DVR_FindNextFile_V50(lFindHandle, &struFileData);
+        switch (result)
+        {
+        case NET_DVR_ISFINDING:
+        {
+            break;
+        }
+        case NET_DVR_FILE_SUCCESS:
+        {
+            files.push_back(struFileData);
+            break;
+        }
+        default:
+        {
+            cont = false;
+        }
+        }
+    }
+    NET_DVR_FindClose_V30(lFindHandle);
+    return files;
 }

@@ -13,7 +13,7 @@ public:
 
     void resize();
 
-    void command(const DWORD command);
+    void command(const DWORD command, void * ptr = nullptr, const size_t len = 0);
 
     NET_DVR_TIME getOSDTime() const;
     size_t getDownloadPos() const;

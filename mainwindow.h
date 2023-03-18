@@ -35,6 +35,8 @@ private slots:
 
     void on_actionAbilities_triggered();
 
+    void on_actionBrowse_triggered();
+
 private:
     Ui::MainWindow *ui;
     const std::shared_ptr<HK_DVR> myDVR;

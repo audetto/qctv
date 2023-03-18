@@ -60,7 +60,14 @@
     <addaction name="action1"/>
     <addaction name="action2"/>
    </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionBrowse"/>
+   </widget>
    <addaction name="menuSystem"/>
+   <addaction name="menuFile"/>
    <addaction name="menuCameras"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -109,6 +116,11 @@
   <action name="actionAbilities">
    <property name="text">
     <string>Abilities</string>
+   </property>
+  </action>
+  <action name="actionBrowse">
+   <property name="text">
+    <string>Browse</string>
    </property>
   </action>
  </widget>

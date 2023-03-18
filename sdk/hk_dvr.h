@@ -24,6 +24,9 @@ public:
         const std::shared_ptr<HK_Callback_V40> & callback) const;
     std::shared_ptr<HK_Playback> getReversePlayback(const size_t channel, const HWND window, const NET_DVR_TIME & start,
         const NET_DVR_TIME & end) const;
+    std::shared_ptr<HK_Playback> getPlayback(const std::string & filname, const HWND window) const;
+
+    std::vector<NET_DVR_FINDDATA_V50> findFiles(const size_t channel, const NET_DVR_TIME_SEARCH_COND & start, const NET_DVR_TIME_SEARCH_COND & end) const;
 
     void getDeviceAbility(const DWORD dwAbilityType, std::vector<char> & in, std::vector<char> & out) const;
 
