@@ -32,6 +32,8 @@ public:
 
     LONG getDigitalChannel(const size_t channel) const;
 
+    NET_DVR_DEVICECFG_V50 getConfig() const;
+
 private:
     const std::shared_ptr<const HK_SDK> mySDK;
     LONG myUserID;

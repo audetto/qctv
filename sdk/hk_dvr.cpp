@@ -185,3 +185,15 @@ std::vector<NET_DVR_FINDDATA_V50> HK_DVR::findFiles(const size_t channel, const 
     NET_DVR_FindClose_V30(lFindHandle);
     return files;
 }
+
+NET_DVR_DEVICECFG_V50 HK_DVR::getConfig() const
+{
+    NET_DVR_DEVICECFG_V50 config = {};
+    config.dwSize = sizeof(config);
+    DWORD dwReturn = 0;
+    if (!NET_DVR_GetDVRConfig(myUserID, NET_DVR_GET_DEVICECFG_V50, -1, &config, sizeof(config), &dwReturn))
+    {
+         HK_SDK::error("NET_DVR_GetDVRConfig");
+    }
+    return config;
+}
