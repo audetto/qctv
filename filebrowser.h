@@ -16,6 +16,9 @@ public:
     explicit FileBrowser(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr);
     ~FileBrowser();
 
+signals:
+    void playbackByName(const QString & name, const QDateTime & start, const QDateTime & end);
+
 private slots:
     void on_search_clicked();
 

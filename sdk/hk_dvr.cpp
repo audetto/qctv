@@ -130,6 +130,24 @@ std::shared_ptr<HK_Playback> HK_DVR::getPlayback(const std::string & filname, co
     return std::make_shared<HK_Playback>(hPlayback, nullptr);
 }
 
+std::shared_ptr<HK_Playback> HK_DVR::getReversePlayback(const std::string & filname, const HWND window) const
+{
+    NET_DVR_PLAY_BY_NAME_PARA struPara = {};
+
+    strncpy(struPara.szFileName, filname.c_str(), sizeof(struPara.szFileName));
+    struPara.szFileName[sizeof(struPara.szFileName) - 1] = '\0';
+    struPara.hWnd = window;
+
+    const LONG hPlayback = NET_DVR_PlayBackReverseByName_V50(myUserID, &struPara);
+
+    if (hPlayback < 0)
+    {
+        HK_SDK::error("NET_DVR_PlayBackReverseByName_V50");
+    }
+
+    return std::make_shared<HK_Playback>(hPlayback, nullptr);
+}
+
 void HK_DVR::getDeviceAbility(const DWORD dwAbilityType, std::vector<char> & in, std::vector<char> & out) const
 {
     const BOOL ret = NET_DVR_GetDeviceAbility(myUserID, dwAbilityType, in.data(), in.size(), out.data(), out.size());

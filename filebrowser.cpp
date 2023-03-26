@@ -57,6 +57,7 @@ void FileBrowser::on_search_clicked()
 
                 int col = 0;
                 QTableWidgetItem *nameItem = new QTableWidgetItem(value.sFileName);
+                nameItem->setData(Qt::UserRole, QVariant::fromValue(value));
                 ui->table->setItem(row, col++, nameItem);
 
                 const QString startTime = netDVR2QDateTime(value.struStartTime).toString();
@@ -87,5 +88,13 @@ void FileBrowser::on_search_clicked()
 
 void FileBrowser::on_open_clicked()
 {
-
+    const QTableWidgetItem * item = ui->table->currentItem();
+    if (item)
+    {
+        const NET_DVR_FINDDATA_V50 data = item->data(Qt::UserRole).value<NET_DVR_FINDDATA_V50>();
+        const QString name(data.sFileName);
+        const QDateTime start = netDVR2QDateTime(data.struStartTime);
+        const QDateTime end = netDVR2QDateTime(data.struStopTime);
+        emit playbackByName(name, start, end);
+    }
 }

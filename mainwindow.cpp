@@ -5,7 +5,8 @@
 #include "sdk/hk_sdk.h"
 #include "sdk/hk_error.h"
 #include "liveframe.h"
-#include "playbackframe.h"
+#include "playbacktime.h"
+#include "playbackname.h"
 #include "downloadframe.h"
 #include "abilityviewer.h"
 #include "filebrowser.h"
@@ -90,8 +91,8 @@ void MainWindow::on_actionPlayback_triggered()
 
 void MainWindow::playback(const size_t channel)
 {
-    PlaybackFrame * frame = new PlaybackFrame(nullptr, myDVR, channel);
-    QObject::connect(frame, &PlaybackFrame::downloadOnChannel, this, &MainWindow::openDownloadOnChannel);
+    PlaybackTime * frame = new PlaybackTime(nullptr, myDVR, channel);
+    QObject::connect(frame, &PlaybackTime::downloadOnChannel, this, &MainWindow::openDownloadOnChannel);
 
     QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
     const QString title = QString("Playback Camera %1").arg(1 + channel);
@@ -127,7 +128,18 @@ void MainWindow::on_actionBrowse_triggered()
 {
     FileBrowser * frame = new FileBrowser(nullptr, myDVR);
 
+    QObject::connect(frame, &FileBrowser::playbackByName, this, &MainWindow::openPlaybackByName);
+
     QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
     window->setWindowTitle("File browser");
+    window->show();
+}
+
+void MainWindow::openPlaybackByName(const QString & name, const QDateTime & start, const QDateTime & end)
+{
+    PlaybackName * frame = new PlaybackName(nullptr, myDVR, name, start, end);
+
+    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
+    window->setWindowTitle(name);
     window->show();
 }

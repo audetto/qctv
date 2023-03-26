@@ -7,11 +7,10 @@
 
 #include "utils.h"
 
-PlaybackFrame::PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr, const size_t channel)
+PlaybackFrame::PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
     : QFrame(parent)
     , ui(new Ui::PlaybackFrame)
     , myDVR(dvr)
-    , myChannel(channel)
     , myTimer(0)
     , myLogSpeed(0)
 {
@@ -54,27 +53,14 @@ void PlaybackFrame::on_play_clicked()
     myTimer = 0;
     myLogSpeed = 0;
 
-    myOrgStart = ui->startDateTime->dateTime();
-    const QDateTime end = myOrgStart.addMSecs(1000 * 600);
-
     try
     {
-        if (ui->forward->isChecked())
-        {
-            myPlayback = myDVR->getPlayback(myChannel, getWindowHandle(), 
-                qDateTime2NetDVR50(myOrgStart), qDateTime2NetDVR50(end),
-                nullptr);
-        }
-        else
-        {
-            myPlayback = myDVR->getReversePlayback(myChannel, getWindowHandle(), 
-                qDateTime2NetDVR(myOrgStart), qDateTime2NetDVR(end));
-        }
+        createPlayback();
 
         command(NET_DVR_PLAYSTART);
         myTimer = startTimer(1000);
 
-        ui->progress->setMaximum(myOrgStart.secsTo(end));
+        ui->progress->setMaximum(myOrgStart.secsTo(myOrgEnd));
         ui->progress->setValue(0);
 
         syncControls(false);
@@ -179,11 +165,6 @@ void PlaybackFrame::on_pause_clicked()
 void PlaybackFrame::on_step_clicked()
 {
     command(NET_DVR_PLAYFRAME);
-}
-
-void PlaybackFrame::on_download_clicked()
-{
-    emit downloadOnChannel(myChannel, ui->startDateTime->dateTime());
 }
 
 void PlaybackFrame::syncControls(const bool enabled)

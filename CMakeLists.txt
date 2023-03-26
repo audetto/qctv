@@ -45,18 +45,29 @@ add_executable(qctv
     utils.h
     receiver.cpp
     receiver.h
+
+    playbacktime.cpp
+    playbacktime.h
+
+    playbackname.cpp
+    playbackname.h
+
     playbackframe.cpp
     playbackframe.h
     playbackframe.ui
+
     downloadframe.cpp
     downloadframe.h
     downloadframe.ui
+
     abilityviewer.cpp
     abilityviewer.h
     abilityviewer.ui
+
     filebrowser.cpp
     filebrowser.h
     filebrowser.ui
+
     qctv.qrc
 )
 

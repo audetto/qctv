@@ -17,15 +17,14 @@ class PlaybackFrame : public QFrame
     Q_OBJECT
 
 public:
-    explicit PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr, const size_t channel);
+    PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr);
     ~PlaybackFrame();
-
-signals:
-    void downloadOnChannel(const size_t channel, const QDateTime & start);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
     void timerEvent(QTimerEvent *event) override;
+
+    virtual void createPlayback() = 0;
 
 private slots:
     void on_play_clicked();
@@ -35,16 +34,16 @@ private slots:
     void on_normal_clicked();
     void on_pause_clicked();
     void on_step_clicked();
-    void on_download_clicked();
+    virtual void on_download_clicked() = 0;
 
-private:
+protected:
     Ui::PlaybackFrame *ui;
 
     const std::shared_ptr<HK_DVR> myDVR;
-    const size_t myChannel;
 
     std::shared_ptr<HK_Playback> myPlayback;
     QDateTime myOrgStart;
+    QDateTime myOrgEnd;
 
     int myTimer;
     int myLogSpeed;

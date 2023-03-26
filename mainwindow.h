@@ -32,6 +32,7 @@ private slots:
     void on_actionDownload_triggered();
 
     void openDownloadOnChannel(const std::optional<size_t> channel, const QDateTime & start);
+    void openPlaybackByName(const QString & name, const QDateTime & start, const QDateTime & end);
 
     void on_actionAbilities_triggered();
 
