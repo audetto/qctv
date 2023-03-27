@@ -1,12 +1,21 @@
 #include "sdk/hk_playback.h"
 
+#include "sdk/hk_callback.h"
 #include "sdk/hk_sdk.h"
 
-HK_Playback::HK_Playback(const LONG handle, const std::shared_ptr<const HK_Callback_V40> & callback)
+HK_Playback::HK_Playback(const LONG handle, const std::shared_ptr<HK_Callback_V40> & callback)
     : myHandle(handle)
-    , myKeepAliveCallback(callback)
+    , myCallback(callback)
 {
-
+    if (callback)
+    {
+        if (!NET_DVR_SetPlayDataCallBack_V40(myHandle, HK_Callback_V40::playDataCallBack, myCallback.get()))
+        {
+            // the distructor wont be called
+            NET_DVR_StopPlayBack(myHandle);
+            HK_SDK::error("NET_DVR_SetPlayDataCallBack_V40");
+        }
+    }
 }
 
 HK_Playback::~HK_Playback()

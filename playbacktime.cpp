@@ -20,13 +20,12 @@ void PlaybackTime::createPlayback()
 
     if (ui->forward->isChecked())
     {
-        myPlayback = myDVR->getPlayback(myChannel, getWindowHandle(), 
-            qDateTime2NetDVR50(myOrgStart), qDateTime2NetDVR50(myOrgEnd),
-            nullptr);
+        myPlayback = myDVR->getPlayback(myChannel, getWindowHandle(), nullptr,
+            qDateTime2NetDVR50(myOrgStart), qDateTime2NetDVR50(myOrgEnd));
     }
     else
     {
-        myPlayback = myDVR->getReversePlayback(myChannel, getWindowHandle(), 
+        myPlayback = myDVR->getReversePlayback(myChannel, getWindowHandle(), nullptr,
             qDateTime2NetDVR(myOrgStart), qDateTime2NetDVR(myOrgEnd));
     }
 }

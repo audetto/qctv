@@ -18,11 +18,11 @@ void PlaybackName::createPlayback()
 {
     if (ui->forward->isChecked())
     {
-        myPlayback = myDVR->getPlayback(myName.toStdString(), getWindowHandle());
+        myPlayback = myDVR->getPlayback(myName.toStdString(), getWindowHandle(), nullptr);
     }
     else
     {
-        myPlayback = myDVR->getReversePlayback(myName.toStdString(), getWindowHandle());
+        myPlayback = myDVR->getReversePlayback(myName.toStdString(), getWindowHandle(), nullptr);
     }
 }
 

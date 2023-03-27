@@ -9,7 +9,6 @@
 #include "utils.h"
 #include <QLocale>
 #include <QDateTime>
-#include <qlocale.h>
 
 
 FileBrowser::FileBrowser(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
@@ -88,9 +87,10 @@ void FileBrowser::on_search_clicked()
 
 void FileBrowser::on_open_clicked()
 {
-    const QTableWidgetItem * item = ui->table->currentItem();
-    if (item)
+    const int row = ui->table->currentRow();
+    if (row >= 0)
     {
+        const QTableWidgetItem * item = ui->table->item(row, 0);
         const NET_DVR_FINDDATA_V50 data = item->data(Qt::UserRole).value<NET_DVR_FINDDATA_V50>();
         const QString name(data.sFileName);
         const QDateTime start = netDVR2QDateTime(data.struStartTime);

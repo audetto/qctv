@@ -8,7 +8,7 @@ class HK_Callback_V40;
 class HK_Playback
 {
 public:
-    HK_Playback(const LONG handle, const std::shared_ptr<const HK_Callback_V40> & callback);
+    HK_Playback(const LONG handle, const std::shared_ptr<HK_Callback_V40> & callback);
     ~HK_Playback();
 
     void resize();
@@ -20,5 +20,5 @@ public:
 
 private:
     const LONG myHandle;
-    const std::shared_ptr<const HK_Callback_V40> myKeepAliveCallback;
+    const std::shared_ptr<HK_Callback_V40> myCallback;
 };
