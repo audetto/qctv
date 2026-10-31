@@ -4,6 +4,8 @@
 #include "sdk/hk_playback.h"
 
 #include <cstring>
+#include <chrono>
+#include <thread>
 
 HK_DVR::HK_DVR(const std::shared_ptr<const HK_SDK> & sdk, const std::string & ip, const WORD port, const std::string & username, const std::string & password)
     : mySDK(sdk)
@@ -33,6 +35,11 @@ HK_DVR::~HK_DVR()
     {
         HK_SDK::debug("NET_DVR_Logout");
     }
+}
+
+const NET_DVR_DEVICEINFO_V40 & HK_DVR::getDeviceInfo() const
+{
+    return myDeviceInfo;
 }
 
 std::shared_ptr<HK_LivePlayer> HK_DVR::getLivePlayer(const size_t channel, const HWND window) const
@@ -158,6 +165,7 @@ std::vector<NET_DVR_FINDDATA_V50> HK_DVR::findFiles(const size_t channel, const 
     const LONG dChannel = myDeviceInfo.struDeviceV30.byStartDChan + channel;
 
     NET_DVR_FILECOND_V50 fileCond = {};
+    fileCond.struStreamID.dwSize = sizeof(fileCond.struStreamID);
     fileCond.struStreamID.dwChannel = dChannel;
     fileCond.dwFileType = 0xFF;
     fileCond.struStartTime = start;
@@ -172,12 +180,13 @@ std::vector<NET_DVR_FINDDATA_V50> HK_DVR::findFiles(const size_t channel, const 
     bool cont = true;
     while (cont)
     {
-        NET_DVR_FINDDATA_V50 struFileData;
+        NET_DVR_FINDDATA_V50 struFileData = {};
         const LONG result = NET_DVR_FindNextFile_V50(lFindHandle, &struFileData);
         switch (result)
         {
         case NET_DVR_ISFINDING:
         {
+            std::this_thread::sleep_for(std::chrono::milliseconds(20));
             break;
         }
         case NET_DVR_FILE_SUCCESS:
@@ -185,9 +194,17 @@ std::vector<NET_DVR_FINDDATA_V50> HK_DVR::findFiles(const size_t channel, const 
             files.push_back(struFileData);
             break;
         }
-        default:
+        case NET_DVR_FILE_NOFIND:
+        case NET_DVR_NOMOREFILE:
         {
             cont = false;
+            break;
+        }
+        default:
+        {
+            const HK_Error error = HK_SDK::debug("NET_DVR_FindNextFile_V50");
+            NET_DVR_FindClose_V30(lFindHandle);
+            throw error;
         }
         }
     }

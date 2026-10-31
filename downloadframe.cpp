@@ -34,6 +34,8 @@ DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dv
 
     mySaveFileDialog.setDirectory(QStandardPaths::writableLocation(QStandardPaths::TempLocation));
     mySaveFileDialog.setNameFilter("*.mp4");
+    mySaveFileDialog.setAcceptMode(QFileDialog::AcceptSave);
+    mySaveFileDialog.setDefaultSuffix("mp4");
 }
 
 DownloadFrame::~DownloadFrame()
@@ -96,8 +98,11 @@ void DownloadFrame::resetDownload()
     ui->stopButton->setEnabled(false);
 
     myPlayback.reset();
-    killTimer(myTimer);
-    myTimer = 0;
+    if (myTimer)
+    {
+        killTimer(myTimer);
+        myTimer = 0;
+    }
 }
 
 void DownloadFrame::timerEvent(QTimerEvent * event)
@@ -111,17 +116,26 @@ void DownloadFrame::timerEvent(QTimerEvent * event)
         ui->progress->setValue(mySize);
         ui->size->setText(QString("%L1").arg(mySize));
 
-        const size_t pos = myPlayback->getDownloadPos();
-        if (pos == 100)
+        try
         {
-            ui->progress->setValue(ui->progress->maximum());
-            ui->status->setText("Done");
-            resetDownload();
+            const int pos = myPlayback->getDownloadPos();
+            if (pos == 100)
+            {
+                ui->progress->setValue(ui->progress->maximum());
+                ui->status->setText("Done");
+                resetDownload();
+            }
+            else if (pos == 200)
+            {
+                ui->status->setText("Error");
+                resetDownload();
+            }
         }
-        else if (pos == 200)
+        catch (const HK_Error & error)
         {
             ui->status->setText("Error");
             resetDownload();
+            showError(this, error);
         }
     }
 }
@@ -145,6 +159,12 @@ void DownloadFrame::addData(size_t size)
 
 void DownloadFrame::on_browse_clicked()
 {
-    const QString fileName = mySaveFileDialog.getSaveFileName();
-    ui->path->setText(fileName);
+    if (mySaveFileDialog.exec() == QDialog::Accepted)
+    {
+        const QStringList files = mySaveFileDialog.selectedFiles();
+        if (files.size() == 1)
+        {
+            ui->path->setText(files.first());
+        }
+    }
 }

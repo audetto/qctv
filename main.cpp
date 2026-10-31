@@ -10,8 +10,22 @@
 #include "sdk/hk_dvr.h"
 
 
+namespace
+{
+
+    void forceX11()
+    {
+        qputenv("QT_QPA_PLATFORM", "xcb");
+        qputenv("EGL_PLATFORM", "x11");
+    }
+
+}
+
+
 int main(int argc, char *argv[])
 {
+    forceX11();  // or the SDK crashes when drowing to the X11 window
+
     QApplication a(argc, argv);
     QApplication::setOrganizationName("AndSoft");
     QApplication::setApplicationName("HK Camera Viewer");

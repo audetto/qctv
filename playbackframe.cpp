@@ -13,6 +13,7 @@ PlaybackFrame::PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dv
     , myDVR(dvr)
     , myTimer(0)
     , myLogSpeed(0)
+    , myPaused(false)
 {
     ui->setupUi(this);
     const QDateTime start = QDateTime::currentDateTime().addDays(-1);
@@ -49,20 +50,24 @@ void PlaybackFrame::resizeEvent(QResizeEvent *event)
 void PlaybackFrame::on_play_clicked()
 {
     myPlayback.reset();
-    killTimer(myTimer);
-    myTimer = 0;
+    if (myTimer)
+    {
+        killTimer(myTimer);
+        myTimer = 0;
+    }
     myLogSpeed = 0;
 
     try
     {
         createPlayback();
 
-        command(NET_DVR_PLAYSTART);
+        myPlayback->command(NET_DVR_PLAYSTART);
         myTimer = startTimer(1000);
 
         ui->progress->setMaximum(myOrgStart.secsTo(myOrgEnd));
         ui->progress->setValue(0);
 
+        setPaused(false);
         syncControls(false);
     }
     catch (const HK_Error & error)
@@ -101,10 +106,14 @@ void PlaybackFrame::on_stop_clicked()
 void PlaybackFrame::resetPlayback()
 {
     syncControls(true);
+    setPaused(false);
 
     myPlayback.reset();
-    killTimer(myTimer);
-    myTimer = 0;
+    if (myTimer)
+    {
+        killTimer(myTimer);
+        myTimer = 0;
+    }
 }
 
 void PlaybackFrame::timerEvent(QTimerEvent *)
@@ -159,7 +168,17 @@ void PlaybackFrame::on_normal_clicked()
 
 void PlaybackFrame::on_pause_clicked()
 {
-    command(NET_DVR_PLAYPAUSE);
+    const DWORD cmd = myPaused ? NET_DVR_PLAYSTART : NET_DVR_PLAYPAUSE;
+    if (command(cmd))
+    {
+        setPaused(!myPaused);
+    }
+}
+
+void PlaybackFrame::setPaused(const bool paused)
+{
+    myPaused = paused;
+    ui->pause->setText(paused ? "Resume" : "Pause");
 }
 
 void PlaybackFrame::on_step_clicked()

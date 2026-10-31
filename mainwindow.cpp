@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
 {
     ui->setupUi(this);
 
-    QIcon icon(QIcon::fromTheme(":/resources/hk.ico"));
+    QIcon icon(":/resources/hk.ico");
     this->setWindowIcon(icon);
 }
 
@@ -60,6 +60,7 @@ void MainWindow::livePlay(const size_t channel)
     catch (const HK_Error & error)
     {
         showError(this, error);
+        window->close();
     }
 }
 

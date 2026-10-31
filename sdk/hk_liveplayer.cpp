@@ -39,7 +39,7 @@ void HK_LivePlayer::stop()
 {
     if (myRecording)
     {
-        NET_DVR_StopSaveRealData(myChannel);
+        NET_DVR_StopSaveRealData(myHandle);
         myRecording = false;
     }
 }

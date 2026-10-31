@@ -46,7 +46,12 @@ NET_DVR_TIME HK_Playback::getOSDTime() const
     return osd;
 }
 
-size_t HK_Playback::getDownloadPos() const
+int HK_Playback::getDownloadPos() const
 {
-    return NET_DVR_GetDownloadPos(myHandle);
+    const int pos = NET_DVR_GetDownloadPos(myHandle);
+    if (pos < 0)
+    {
+        HK_SDK::error("NET_DVR_GetDownloadPos");
+    }
+    return pos;
 }

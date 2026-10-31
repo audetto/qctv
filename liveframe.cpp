@@ -42,7 +42,12 @@ bool LiveFrame::event(QEvent *event)
     if (event->type() == QEvent::WinIdChange)
     {
         // I know of no way to tell NET_DVR that the window id has changed
-        myLivePlayer.reset();
+        if (myLivePlayer)
+        {
+            on_stop_clicked();
+            myLivePlayer.reset();
+            ui->status->setText("Window changed: live view stopped");
+        }
     }
     return QFrame::event(event);
 }
@@ -54,12 +59,19 @@ WId LiveFrame::getWindowHandle() const
 
 void LiveFrame::on_picture_clicked()
 {
+    if (!myLivePlayer)
+    {
+        ui->status->setText("Not playing");
+        return;
+    }
+
     QSettings settings;
     QDir dir = settings.value("output/pictures", "/tmp/qctv").toString();
     if (!dir.exists())
     {
         if (!dir.mkpath("."))
         {
+            ui->status->setText("Cannot create " + dir.path());
             return;
         }
     }
@@ -87,8 +99,11 @@ void LiveFrame::timerEvent(QTimerEvent *)
 
 void LiveFrame::on_record_clicked()
 {
-    ui->record->setEnabled(false);
-    ui->stop->setEnabled(true);
+    if (!myLivePlayer)
+    {
+        ui->status->setText("Not playing");
+        return;
+    }
 
     QSettings settings;
     QDir dir = settings.value("output/videos", "/tmp/qctv").toString();
@@ -96,6 +111,7 @@ void LiveFrame::on_record_clicked()
     {
         if (!dir.mkpath("."))
         {
+            ui->status->setText("Cannot create " + dir.path());
             return;
         }
     }
@@ -107,8 +123,11 @@ void LiveFrame::on_record_clicked()
     {
         myLivePlayer->record(path.toStdString());
         ui->status->setText(path);
-        myTimer = startTimer(1000);
         myStartTime = QDateTime::currentDateTime();
+        myTimer = startTimer(1000);
+
+        ui->record->setEnabled(false);
+        ui->stop->setEnabled(true);
     }
     catch (const HK_Error & error)
     {
@@ -120,7 +139,13 @@ void LiveFrame::on_stop_clicked()
 {
     ui->record->setEnabled(true);
     ui->stop->setEnabled(false);
-    myLivePlayer->stop();
-    killTimer(myTimer);
-    myTimer = 0;
+    if (myLivePlayer)
+    {
+        myLivePlayer->stop();
+    }
+    if (myTimer)
+    {
+        killTimer(myTimer);
+        myTimer = 0;
+    }
 }
