@@ -33,9 +33,9 @@ DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dv
     ui->endDateTime->setDateTime(end);
 
     mySaveFileDialog.setDirectory(QStandardPaths::writableLocation(QStandardPaths::TempLocation));
-    mySaveFileDialog.setNameFilter("*.mp4");
+    mySaveFileDialog.setNameFilter("MPEG program stream (*.ps)");
     mySaveFileDialog.setAcceptMode(QFileDialog::AcceptSave);
-    mySaveFileDialog.setDefaultSuffix("mp4");
+    mySaveFileDialog.setDefaultSuffix("ps");
 }
 
 DownloadFrame::~DownloadFrame()
