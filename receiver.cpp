@@ -4,7 +4,7 @@
 Receiver::Receiver(const QString & name)
     : myFile(name)
 {
-    if (!myFile.open(QIODeviceBase::WriteOnly))
+    if (!myFile.open(QIODevice::WriteOnly))
     {
         throw std::runtime_error("Cannot open: '" + name.toStdString() + "'");
     }

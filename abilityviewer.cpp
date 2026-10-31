@@ -3,11 +3,11 @@
 
 #include "sdk/hk_dvr.h"
 #include "sdk/hk_error.h"
-#include <exception>
 
 #include <QFile>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+#include <QTextStream>
 
 AbilityViewer::AbilityViewer(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
     : QWidget(parent)
