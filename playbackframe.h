@@ -47,12 +47,10 @@ protected:
 
     int myTimer;
     int myLogSpeed;
-    bool myPaused;
 
     WId getWindowHandle() const;
     bool command(const DWORD cmd);
     void resetPlayback();
     void syncControls(const bool enabled);
-    void setPaused(const bool paused);
     QString getLogSpeedString() const;
 };

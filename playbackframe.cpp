@@ -13,9 +13,9 @@ PlaybackFrame::PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dv
     , myDVR(dvr)
     , myTimer(0)
     , myLogSpeed(0)
-    , myPaused(false)
 {
     ui->setupUi(this);
+    ui->pause->setCheckable(true);
     const QDateTime start = QDateTime::currentDateTime().addDays(-1);
     ui->startDateTime->setDateTime(start);
     ui->speed->setText(getLogSpeedString());
@@ -67,7 +67,7 @@ void PlaybackFrame::on_play_clicked()
         ui->progress->setMaximum(myOrgStart.secsTo(myOrgEnd));
         ui->progress->setValue(0);
 
-        setPaused(false);
+        ui->pause->setChecked(false);
         syncControls(false);
     }
     catch (const HK_Error & error)
@@ -106,7 +106,7 @@ void PlaybackFrame::on_stop_clicked()
 void PlaybackFrame::resetPlayback()
 {
     syncControls(true);
-    setPaused(false);
+    ui->pause->setChecked(false);
 
     myPlayback.reset();
     if (myTimer)
@@ -147,6 +147,7 @@ void PlaybackFrame::on_fast_clicked()
     if (command(NET_DVR_PLAYFAST))
     {
         ++myLogSpeed;
+        ui->pause->setChecked(false);
     }
 }
 
@@ -155,6 +156,7 @@ void PlaybackFrame::on_slow_clicked()
     if (command(NET_DVR_PLAYSLOW))
     {
         --myLogSpeed;
+        ui->pause->setChecked(false);
     }
 }
 
@@ -163,27 +165,33 @@ void PlaybackFrame::on_normal_clicked()
     if (command(NET_DVR_PLAYNORMAL))
     {
         myLogSpeed = 0;
+        ui->pause->setChecked(false);
     }
 }
 
 void PlaybackFrame::on_pause_clicked()
 {
-    const DWORD cmd = myPaused ? NET_DVR_PLAYSTART : NET_DVR_PLAYPAUSE;
+    const bool pause = ui->pause->isChecked();
+    const DWORD cmd = pause ? NET_DVR_PLAYPAUSE : NET_DVR_PLAYNORMAL;
     if (command(cmd))
     {
-        setPaused(!myPaused);
+        if (!pause)
+        {
+            myLogSpeed = 0;
+        }
     }
-}
-
-void PlaybackFrame::setPaused(const bool paused)
-{
-    myPaused = paused;
-    ui->pause->setText(paused ? "Resume" : "Pause");
+    else
+    {
+        ui->pause->setChecked(!pause);
+    }
 }
 
 void PlaybackFrame::on_step_clicked()
 {
-    command(NET_DVR_PLAYFRAME);
+    if (command(NET_DVR_PLAYFRAME))
+    {
+        ui->pause->setChecked(true);
+    }
 }
 
 void PlaybackFrame::syncControls(const bool enabled)
