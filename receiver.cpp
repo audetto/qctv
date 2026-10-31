@@ -18,6 +18,10 @@ void Receiver::moreData(const LONG lPlayHandle, const DWORD dwDataType, const BY
     switch (dwDataType)
     {
     case NET_DVR_STREAMDATA:
+    {
+        // 40-byte HikVision data header, which we do not need
+        break;
+    }
     case NET_DVR_SYSHEAD:
       {
         emit dataReceived(dwBufSize);

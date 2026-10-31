@@ -182,6 +182,7 @@ void PlaybackFrame::on_pause_clicked()
     }
     else
     {
+        // command failed, so revert the button state
         ui->pause->setChecked(!pause);
     }
 }

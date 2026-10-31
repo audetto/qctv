@@ -117,7 +117,7 @@ void LiveFrame::on_record_clicked()
     }
 
     QDateTime now = QDateTime::currentDateTime();
-    QString filename = QString("C%1_").arg(myLivePlayer->getChannel()) + now.toString("yyyy-MM-dd_hh-mm-ss") + QString(".mp4");
+    QString filename = QString("C%1_").arg(myLivePlayer->getChannel()) + now.toString("yyyy-MM-dd_hh-mm-ss") + QString(".ps");
     QString path = dir.filePath(filename);
     try
     {
