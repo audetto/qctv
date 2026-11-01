@@ -26,6 +26,8 @@ protected:
 
     virtual void createPlayback() = 0;
 
+    virtual bool canSeek() const;
+
 private slots:
     void on_play_clicked();
     void on_stop_clicked();
@@ -34,6 +36,7 @@ private slots:
     void on_normal_clicked();
     void on_pause_clicked();
     void on_step_clicked();
+    void on_progress_sliderReleased();
     virtual void on_download_clicked() = 0;
 
 protected:

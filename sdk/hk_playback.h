@@ -18,6 +18,8 @@ public:
     NET_DVR_TIME getOSDTime() const;
     int getDownloadPos() const;
 
+    void seekTime(const NET_DVR_TIME &time);
+
 private:
     const LONG myHandle;
     const std::shared_ptr<HK_Callback_V40> myCallback;

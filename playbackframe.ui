@@ -131,7 +131,16 @@
        </widget>
       </item>
       <item row="2" column="0" colspan="5">
-       <widget class="QProgressBar" name="progress">
+       <widget class="QSlider" name="progress">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tracking">
+         <bool>false</bool>
+        </property>
         <property name="value">
          <number>0</number>
         </property>

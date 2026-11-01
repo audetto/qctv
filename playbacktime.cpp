@@ -31,3 +31,9 @@ void PlaybackTime::on_download_clicked()
 {
     emit downloadOnChannel(myChannel, ui->startDateTime->dateTime());
 }
+
+bool PlaybackTime::canSeek() const
+{
+    // NET_DVR_PLAYSETTIME
+    return true;
+}

@@ -54,3 +54,9 @@ int HK_Playback::getDownloadPos() const
     }
     return pos;
 }
+
+void HK_Playback::seekTime(const NET_DVR_TIME &time)
+{
+    NET_DVR_TIME seek = time;
+    command(NET_DVR_PLAYSETTIME, &seek, sizeof(seek));
+}

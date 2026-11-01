@@ -121,7 +121,11 @@ void PlaybackFrame::timerEvent(QTimerEvent *)
         try
         {
             const QDateTime osd = netDVR2QDateTime(myPlayback->getOSDTime());
-            ui->progress->setValue(myOrgStart.secsTo(osd));
+            if (!ui->progress->isSliderDown())
+            {
+                // only update the progress bar if the user is not dragging it
+                ui->progress->setValue(myOrgStart.secsTo(osd));
+            }
             ui->startDateTime->setDateTime(osd);
             ui->speed->setText(getLogSpeedString());
         }
@@ -193,6 +197,11 @@ void PlaybackFrame::on_step_clicked()
     }
 }
 
+bool PlaybackFrame::canSeek() const
+{
+    return false;
+}
+
 void PlaybackFrame::syncControls(const bool enabled)
 {
     ui->play->setEnabled(false != enabled);
@@ -205,4 +214,22 @@ void PlaybackFrame::syncControls(const bool enabled)
     ui->pause->setEnabled(true != enabled);
     ui->step->setEnabled(true != enabled);
     ui->normal->setEnabled(true != enabled);
+    ui->progress->setEnabled((true != enabled) && canSeek());
+}
+
+void PlaybackFrame::on_progress_sliderReleased()
+{
+    if (myPlayback && canSeek())
+    {
+        const int pos = ui->progress->sliderPosition();
+        const QDateTime target = myOrgStart.addSecs(pos);
+        try
+        {
+            myPlayback->seekTime(qDateTime2NetDVR(target));
+        }
+        catch (const HK_Error &error)
+        {
+            showError(this, error);
+        }
+    }
 }
