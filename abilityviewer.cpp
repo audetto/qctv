@@ -25,7 +25,6 @@ void AbilityViewer::retrieveAbility(DWORD ability, size_t channel)
     std::vector<char> out(1024 * 100);
     std::vector<char> in;
     QFile file;
-    QString text;
     switch (ability)
     {
     case DEVICE_SOFTHARDWARE_ABILITY:
@@ -72,7 +71,9 @@ void AbilityViewer::retrieveAbility(DWORD ability, size_t channel)
     }
 
     myDVR->getDeviceAbility(ability, in, out);
-    QXmlStreamReader reader(out.data());
+    const QByteArray reply(out.data(), qstrnlen(out.data(), out.size()));
+    
+    QXmlStreamReader reader(reply);
 
     QString formatted;
     QXmlStreamWriter writer(&formatted);
@@ -88,7 +89,14 @@ void AbilityViewer::retrieveAbility(DWORD ability, size_t channel)
         }
     }
 
-    ui->text->setPlainText(formatted);
+    if (reader.hasError())
+    {
+        ui->text->setPlainText("Error parsing XML: " + reader.errorString());
+    }
+    else
+    {
+        ui->text->setPlainText(formatted);
+    }
 }
 
 void AbilityViewer::updateAbilityData()
