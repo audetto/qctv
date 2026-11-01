@@ -13,7 +13,8 @@ PlaybackTime::PlaybackTime(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr, 
 void PlaybackTime::createPlayback()
 {
     myOrgStart = ui->startDateTime->dateTime();
-    myOrgEnd = myOrgStart.addMSecs(1000 * 600);
+    const std::chrono::milliseconds duration = std::chrono::minutes(30);
+    myOrgEnd = myOrgStart.addDuration(duration);
 
     if (ui->forward->isChecked())
     {
@@ -30,10 +31,4 @@ void PlaybackTime::createPlayback()
 void PlaybackTime::on_download_clicked()
 {
     emit downloadOnChannel(myChannel, ui->startDateTime->dateTime());
-}
-
-bool PlaybackTime::canSeek() const
-{
-    // NET_DVR_PLAYSETTIME
-    return true;
 }

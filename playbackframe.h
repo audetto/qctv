@@ -26,8 +26,6 @@ protected:
 
     virtual void createPlayback() = 0;
 
-    virtual bool canSeek() const;
-
 private slots:
     void on_play_clicked();
     void on_stop_clicked();

@@ -197,11 +197,6 @@ void PlaybackFrame::on_step_clicked()
     }
 }
 
-bool PlaybackFrame::canSeek() const
-{
-    return false;
-}
-
 void PlaybackFrame::syncControls(const bool enabled)
 {
     ui->play->setEnabled(false != enabled);
@@ -214,12 +209,12 @@ void PlaybackFrame::syncControls(const bool enabled)
     ui->pause->setEnabled(true != enabled);
     ui->step->setEnabled(true != enabled);
     ui->normal->setEnabled(true != enabled);
-    ui->progress->setEnabled((true != enabled) && canSeek());
+    ui->progress->setEnabled(true != enabled);
 }
 
 void PlaybackFrame::on_progress_sliderReleased()
 {
-    if (myPlayback && canSeek())
+    if (myPlayback)
     {
         const int pos = ui->progress->sliderPosition();
         const QDateTime target = myOrgStart.addSecs(pos);

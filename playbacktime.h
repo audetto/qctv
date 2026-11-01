@@ -15,8 +15,6 @@ signals:
 protected:
     virtual void createPlayback() override;
 
-    virtual bool canSeek() const override;
-
 private:
     virtual void on_download_clicked() override;
 

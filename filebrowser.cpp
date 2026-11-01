@@ -17,7 +17,8 @@ FileBrowser::FileBrowser(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr)
     const QDateTime start = QDateTime::currentDateTime().addDays(-1);
     ui->startDateTime->setDateTime(start);
 
-    const QDateTime end = start.addMSecs(1000 * 3600);
+    const std::chrono::milliseconds duration = std::chrono::minutes(60);
+    const QDateTime end = start.addDuration(duration);
     ui->endDateTime->setDateTime(end);
 }
 

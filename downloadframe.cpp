@@ -27,7 +27,8 @@ DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr
 
     ui->startDateTime->setDateTime(start);
 
-    const QDateTime end = start.addMSecs(1000 * 60 * 10); // 10 minute
+    const std::chrono::milliseconds duration = std::chrono::minutes(10);
+    const QDateTime end = start.addDuration(duration);
     ui->endDateTime->setDateTime(end);
 
     mySaveFileDialog.setDirectory(QStandardPaths::writableLocation(QStandardPaths::TempLocation));

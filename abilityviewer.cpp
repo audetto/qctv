@@ -72,7 +72,7 @@ void AbilityViewer::retrieveAbility(DWORD ability, size_t channel)
 
     myDVR->getDeviceAbility(ability, in, out);
     const QByteArray reply(out.data(), qstrnlen(out.data(), out.size()));
-    
+
     QXmlStreamReader reader(reply);
 
     QString formatted;
