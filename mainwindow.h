@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <memory>
 #include <optional>
+#include <vector>
 
 namespace Ui
 {
@@ -44,4 +45,7 @@ private:
 
     void livePlay(const size_t channel);
     void playback(const size_t channel);
+
+    void createCameraActions();
+    std::vector<size_t> getCheckedCameras() const;
 };

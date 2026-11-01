@@ -11,6 +11,14 @@ class HK_LivePlayer;
 class HK_Playback;
 class HK_Callback_V40;
 
+struct HK_IPChannel
+{
+    bool attached = false;
+    bool online = false;
+    std::string ip;
+    std::string name;
+};
+
 class HK_DVR
 {
 public:
@@ -43,8 +51,11 @@ public:
     void getDeviceAbility(const DWORD dwAbilityType, std::vector<char> &in, std::vector<char> &out) const;
 
     LONG getDigitalChannel(const size_t channel) const;
+    std::string getChannelName(const size_t channel) const;
 
-    NET_DVR_DEVICECFG_V50 getConfig() const;
+    std::vector<HK_IPChannel> getIPChannels() const;
+
+    NET_DVR_DEVICECFG_V50 getDeviceConfig() const;
 
 private:
     const std::shared_ptr<const HK_SDK> mySDK;

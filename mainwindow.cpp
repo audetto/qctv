@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr)
 
     QIcon icon(":/resources/hk.ico");
     this->setWindowIcon(icon);
+    createCameraActions();
 }
 
 MainWindow::~MainWindow()
@@ -29,15 +30,54 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::createCameraActions()
+{
+    QAction *before = ui->menuCameras->actions().value(0);
+
+    std::vector<HK_IPChannel> ipChannels;
+    try
+    {
+        ipChannels = myDVR->getIPChannels();
+    }
+    catch (const HK_Error &error)
+    {
+        showError(this, error);
+    }
+
+    for (size_t i = 0; i < ipChannels.size(); ++i)
+    {
+        const HK_IPChannel &channel = ipChannels[i];
+        if (channel.online)
+        {
+            const QString name = QString::fromStdString(ipChannels[i].name);
+            QAction *action = new QAction(name, ui->menuCameras);
+            action->setCheckable(true);
+            action->setData(QVariant::fromValue<qulonglong>(i));
+            ui->menuCameras->insertAction(before, action);
+        }
+    }
+}
+
+std::vector<size_t> MainWindow::getCheckedCameras() const
+{
+    std::vector<size_t> checkedCameras;
+    const QList<QAction *> actions = ui->menuCameras->actions();
+    for (QAction *action : actions)
+    {
+        if (action->isChecked() && action->data().isValid())
+        {
+            const size_t channel = action->data().toULongLong();
+            checkedCameras.push_back(channel);
+        }
+    }
+    return checkedCameras;
+}
+
 void MainWindow::on_actionLive_triggered()
 {
-    if (ui->action1->isChecked())
+    for (const size_t channel : getCheckedCameras())
     {
-        livePlay(0);
-    }
-    if (ui->action2->isChecked())
-    {
-        livePlay(1);
+        livePlay(channel);
     }
 }
 
@@ -80,13 +120,9 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_actionPlayback_triggered()
 {
-    if (ui->action1->isChecked())
+    for (const size_t channel : getCheckedCameras())
     {
-        playback(0);
-    }
-    if (ui->action2->isChecked())
-    {
-        playback(1);
+        playback(channel);
     }
 }
 
