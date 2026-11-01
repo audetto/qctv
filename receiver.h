@@ -13,7 +13,7 @@ public:
     virtual void moreData(const LONG lPlayHandle, const DWORD dwDataType, const BYTE *pBuffer,
                           const DWORD dwBufSize) override;
 signals:
-    void dataReceived(const size_t data);
+    void dataReceived(const int data);
 
 private:
     QFile myFile;

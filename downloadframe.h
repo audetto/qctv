@@ -30,7 +30,7 @@ private slots:
 
     void on_stopButton_clicked();
 
-    void addData(size_t size);
+    void addData(int size);
 
     void on_browse_clicked();
 
@@ -42,7 +42,7 @@ private:
     std::shared_ptr<HK_Playback> myPlayback;
 
     int myTimer;
-    size_t mySize;
+    int mySize;
 
     QFileDialog mySaveFileDialog;
 

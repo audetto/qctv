@@ -105,10 +105,10 @@ void AbilityViewer::updateAbilityData()
                                           DEVICE_DYNCHAN_ABILITY,      DEVICE_USER_ABILITY,    DEVICE_VIDEOPIC_ABILITY,
                                           DEVICE_JPEG_CAP_ABILITY,     STREAM_ABILITY};
 
-    const auto abilityIndex = ui->ability->currentIndex();
-    const auto channelIndex = ui->channel->currentIndex();
+    const int abilityIndex = ui->ability->currentIndex();
+    const int channelIndex = ui->channel->currentIndex();
 
-    if (abilityIndex >= 0 && abilityIndex < abilities.size() && channelIndex >= 0)
+    if (abilityIndex >= 0 && abilityIndex < static_cast<int>(abilities.size()) && channelIndex >= 0)
     {
         const DWORD ability = abilities[abilityIndex];
         try

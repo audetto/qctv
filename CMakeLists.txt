@@ -72,7 +72,8 @@ add_executable(qctv
     qctv.qrc
 )
 
-target_include_directories(qctv PRIVATE ${SDK_INC} ${PLAYER})
+target_include_directories(qctv SYSTEM PRIVATE ${SDK_INC} ${PLAYER})
+target_compile_options(qctv PRIVATE -Wall -Wextra)
 
 find_library(HCNETSDK NAMES hcnetsdk PATHS ${SDK_LIB})
 find_library(PLAYCTRL NAMES PlayCtrl PATHS ${SDK_LIB})

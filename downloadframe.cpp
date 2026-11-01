@@ -103,7 +103,7 @@ void DownloadFrame::resetDownload()
     }
 }
 
-void DownloadFrame::timerEvent(QTimerEvent *event)
+void DownloadFrame::timerEvent(QTimerEvent * /*event*/)
 {
     if (myPlayback)
     {
@@ -150,7 +150,7 @@ void DownloadFrame::closeEvent(QCloseEvent *event)
     }
 }
 
-void DownloadFrame::addData(size_t size)
+void DownloadFrame::addData(int size)
 {
     mySize += size;
 }
