@@ -17,12 +17,12 @@ void Receiver::moreData(const LONG lPlayHandle, const DWORD dwDataType, const BY
 
     switch (dwDataType)
     {
-    case NET_DVR_STREAMDATA:
+    case NET_DVR_SYSHEAD:
     {
         // 40-byte HikVision data header, which we do not need
         break;
     }
-    case NET_DVR_SYSHEAD:
+    case NET_DVR_STREAMDATA:
     {
         emit dataReceived(dwBufSize);
         const char *data = reinterpret_cast<const char *>(pBuffer);
