@@ -46,14 +46,17 @@ void MainWindow::livePlay(const size_t channel)
     LiveFrame *frame = new LiveFrame();
 
     QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
-    const QString title = QString("Live Camera %1").arg(1 + channel);
+
+    const bool subStream = ui->actionSubStream->isChecked();
+    const QString title = QString("Live Camera %1 (%2)").arg(1 + channel).arg(subStream ? "sub" : "main");
     window->setWindowTitle(title);
     window->show();
 
     WId id = frame->getWindowHandle();
+    const DWORD streamType = subStream ? 1 : 0;
     try
     {
-        frame->setPlay(myDVR->getLivePlayer(channel, id));
+        frame->setPlay(myDVR->getLivePlayer(channel, streamType, id));
     }
     catch (const HK_Error &error)
     {
@@ -109,6 +112,7 @@ void MainWindow::openDownloadOnChannel(const std::optional<size_t> channel, cons
     DownloadFrame *frame = new DownloadFrame(nullptr, myDVR, channel, start);
 
     QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
+
     window->setWindowTitle("Download video");
     window->show();
 }
@@ -118,6 +122,7 @@ void MainWindow::on_actionAbilities_triggered()
     AbilityViewer *frame = new AbilityViewer(nullptr, myDVR);
 
     QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
+
     window->setWindowTitle("Ability viewer");
     window->show();
 }
@@ -138,6 +143,7 @@ void MainWindow::openPlaybackByName(const QString &name, const QDateTime &start,
     PlaybackName *frame = new PlaybackName(nullptr, myDVR, name, start, end);
 
     QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
+
     window->setWindowTitle(name);
     window->show();
 }

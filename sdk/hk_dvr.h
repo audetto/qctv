@@ -20,7 +20,8 @@ public:
 
     const NET_DVR_DEVICEINFO_V40 &getDeviceInfo() const;
 
-    std::shared_ptr<HK_LivePlayer> getLivePlayer(const size_t channel, const HWND window) const;
+    // streamType: 0-Main Stream, 1-Sub Stream, 2-Stream 3, 3-Stream 4, and so on
+    std::shared_ptr<HK_LivePlayer> getLivePlayer(const size_t channel, const DWORD streamType, const HWND window) const;
 
     // by time
     std::shared_ptr<HK_Playback> getPlayback(const size_t channel, const HWND window,

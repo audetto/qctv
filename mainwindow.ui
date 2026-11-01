@@ -59,6 +59,8 @@
     </property>
     <addaction name="action1"/>
     <addaction name="action2"/>
+    <addaction name="separator"/>
+    <addaction name="actionSubStream"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -121,6 +123,17 @@
   <action name="actionBrowse">
    <property name="text">
     <string>Browse</string>
+   </property>
+  </action>
+  <action name="actionSubStream">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Sub-stream (live)</string>
    </property>
   </action>
  </widget>

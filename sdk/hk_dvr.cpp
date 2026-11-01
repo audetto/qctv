@@ -42,14 +42,14 @@ const NET_DVR_DEVICEINFO_V40 &HK_DVR::getDeviceInfo() const
     return myDeviceInfo;
 }
 
-std::shared_ptr<HK_LivePlayer> HK_DVR::getLivePlayer(const size_t channel, const HWND window) const
+std::shared_ptr<HK_LivePlayer> HK_DVR::getLivePlayer(const size_t channel, const DWORD streamType, const HWND window) const
 {
     const LONG dChannel = myDeviceInfo.struDeviceV30.byStartDChan + channel;
 
     NET_DVR_PREVIEWINFO struPlayInfo = {};
     struPlayInfo.hPlayWnd = 0;
     struPlayInfo.lChannel = dChannel;
-    struPlayInfo.dwStreamType = 0; // 0-Main Stream, 1-Sub Stream, 2-Stream 3, 3-Stream 4, and so on
+    struPlayInfo.dwStreamType = streamType;
     struPlayInfo.dwLinkMode = 0;   // 0- TCP Mode, 1- UDP Mode, 2- Multicast Mode, 3- RTP Mode, 4-RTP/RTSP, 5-RSTP/HTTP
     struPlayInfo.bBlocked = 1;     // 0- Non-blocking Streaming, 1- Blocking Streaming
     struPlayInfo.hPlayWnd = window;
