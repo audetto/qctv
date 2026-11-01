@@ -65,7 +65,7 @@ void DownloadFrame::on_startButton_clicked()
         QObject::connect(rec.get(), &Receiver::dataReceived, this, &DownloadFrame::addData);
 
         mySize = 0;
-        myPlayback = myDVR->getPlayback(channel, 0, rec, qDateTime2NetDVR50(start), qDateTime2NetDVR50(end));
+        myPlayback = myDVR->getPlayback(channel, 0, rec, qDateTime2NetDVR50(start), qDateTime2NetDVR50(end), 0);
         myPlayback->command(NET_DVR_PLAYSTART);
         myTimer = startTimer(250);
 

@@ -13,7 +13,6 @@ PlaybackFrame::PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr
     , myLogSpeed(0)
 {
     ui->setupUi(this);
-    ui->pause->setCheckable(true);
     const QDateTime start = QDateTime::currentDateTime().addDays(-1);
     ui->startDateTime->setDateTime(start);
     ui->speed->setText(getLogSpeedString());

@@ -11,6 +11,7 @@ PlaybackName::PlaybackName(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr, 
 {
     myOrgStart = start;
     myOrgEnd = end;
+    ui->download->setEnabled(false);
 }
 
 void PlaybackName::createPlayback()

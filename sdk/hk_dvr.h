@@ -34,10 +34,8 @@ public:
     // by time
     std::shared_ptr<HK_Playback> getPlayback(const size_t channel, const HWND window,
                                              const std::shared_ptr<HK_Callback_V40> &callback,
-                                             const NET_DVR_TIME_V50 &start, const NET_DVR_TIME_V50 &end) const;
-    std::shared_ptr<HK_Playback> getReversePlayback(const size_t channel, const HWND window,
-                                                    const std::shared_ptr<HK_Callback_V40> &callback,
-                                                    const NET_DVR_TIME &start, const NET_DVR_TIME &end) const;
+                                             const NET_DVR_TIME_V50 &start, const NET_DVR_TIME_V50 &end,
+                                             const BYTE byPlayMode) const;
 
     // by name
     std::shared_ptr<HK_Playback> getPlayback(const std::string &filname, const HWND window,

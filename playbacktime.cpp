@@ -16,16 +16,9 @@ void PlaybackTime::createPlayback()
     const std::chrono::milliseconds duration = std::chrono::minutes(30);
     myOrgEnd = myOrgStart.addDuration(duration);
 
-    if (ui->forward->isChecked())
-    {
-        myPlayback = myDVR->getPlayback(myChannel, getWindowHandle(), nullptr, qDateTime2NetDVR50(myOrgStart),
-                                        qDateTime2NetDVR50(myOrgEnd));
-    }
-    else
-    {
-        myPlayback = myDVR->getReversePlayback(myChannel, getWindowHandle(), nullptr, qDateTime2NetDVR(myOrgStart),
-                                               qDateTime2NetDVR(myOrgEnd));
-    }
+    const BYTE byPlayMode = ui->forward->isChecked() ? 0 : 1;
+    myPlayback = myDVR->getPlayback(myChannel, getWindowHandle(), nullptr, qDateTime2NetDVR50(myOrgStart),
+                                    qDateTime2NetDVR50(myOrgEnd), byPlayMode);
 }
 
 void PlaybackTime::on_download_clicked()
