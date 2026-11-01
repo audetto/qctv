@@ -1,5 +1,6 @@
 #pragma once
 
+#include "utils.h"
 #include <QWidget>
 
 namespace Ui
@@ -14,7 +15,7 @@ class FileBrowser : public QWidget
     Q_OBJECT
 
 public:
-    explicit FileBrowser(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr);
+    explicit FileBrowser(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr, const std::vector<Camera> &cameras);
     ~FileBrowser();
 
 signals:

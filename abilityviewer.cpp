@@ -7,12 +7,13 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-AbilityViewer::AbilityViewer(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr)
+AbilityViewer::AbilityViewer(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr, const std::vector<Camera> &cameras)
     : QWidget(parent)
     , ui(new Ui::AbilityViewer)
     , myDVR(dvr)
 {
     ui->setupUi(this);
+    fillCameraComboBox(ui->channel, cameras);
 }
 
 AbilityViewer::~AbilityViewer()
@@ -111,9 +112,10 @@ void AbilityViewer::updateAbilityData()
     if (abilityIndex >= 0 && abilityIndex < static_cast<int>(abilities.size()) && channelIndex >= 0)
     {
         const DWORD ability = abilities[abilityIndex];
+        const size_t channel = ui->channel->currentData().toULongLong();
         try
         {
-            retrieveAbility(ability, channelIndex);
+            retrieveAbility(ability, channel);
         }
         catch (const HK_Error &error)
         {

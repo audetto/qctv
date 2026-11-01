@@ -1,10 +1,24 @@
 #pragma once
 
 #include "HCNetSDK.h"
+#include <QString>
+#include <vector>
 
+class HK_DVR;
 class HK_Error;
+class QComboBox;
 class QWidget;
 class QDateTime;
+
+struct Camera
+{
+    size_t channel;
+    QString name;
+};
+
+std::vector<Camera> getOnlineCameras(const HK_DVR &dvr);
+
+void fillCameraComboBox(QComboBox *comboBox, const std::vector<Camera> &cameras);
 
 void showError(QWidget *parent, const HK_Error &error);
 

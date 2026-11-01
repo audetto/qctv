@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
         const std::shared_ptr<HK_DVR> dvr = std::make_shared<HK_DVR>(
             sdk, parser.value(hostnameOption).toStdString(), parser.value(portOption).toInt(),
             parser.value(usernameOption).toStdString(), parser.value(passwordOption).toStdString());
+
         MainWindow w(nullptr, dvr);
         w.show();
         return a.exec();

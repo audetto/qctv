@@ -1,5 +1,6 @@
 #pragma once
 
+#include "utils.h"
 #include <QMainWindow>
 #include <memory>
 #include <optional>
@@ -42,10 +43,12 @@ private slots:
 private:
     Ui::MainWindow *ui;
     const std::shared_ptr<HK_DVR> myDVR;
+    std::vector<Camera> myCameras;
 
     void livePlay(const size_t channel);
     void playback(const size_t channel);
 
     void createCameraActions();
     std::vector<size_t> getCheckedCameras() const;
+    QString getCameraName(const size_t channel) const;
 };

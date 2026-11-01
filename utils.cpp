@@ -1,9 +1,38 @@
 #include "utils.h"
 
+#include "sdk/hk_dvr.h"
 #include "sdk/hk_error.h"
 
+#include <QComboBox>
 #include <QDateTime>
 #include <QMessageBox>
+
+std::vector<Camera> getOnlineCameras(const HK_DVR &dvr)
+{
+    std::vector<Camera> cameras;
+    const std::vector<HK_IPChannel> ipChannels = dvr.getIPChannels();
+    for (size_t i = 0; i < ipChannels.size(); ++i)
+    {
+        const HK_IPChannel &channel = ipChannels[i];
+        if (channel.online)
+        {
+            const QString name =
+                channel.name.empty() ? QString("Camera %1").arg(1 + i) : QString::fromStdString(channel.name);
+            cameras.emplace_back(i, name);
+        }
+    }
+
+    return cameras;
+}
+
+void fillCameraComboBox(QComboBox *comboBox, const std::vector<Camera> &cameras)
+{
+    comboBox->clear();
+    for (const Camera &camera : cameras)
+    {
+        comboBox->addItem(camera.name, QVariant::fromValue<qulonglong>(camera.channel));
+    }
+}
 
 void showError(QWidget *parent, const HK_Error &error)
 {

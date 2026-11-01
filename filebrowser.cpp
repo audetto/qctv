@@ -7,12 +7,13 @@
 #include <QDateTime>
 #include <QLocale>
 
-FileBrowser::FileBrowser(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr)
+FileBrowser::FileBrowser(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr, const std::vector<Camera> &cameras)
     : QWidget(parent)
     , ui(new Ui::FileBrowser)
     , myDVR(dvr)
 {
     ui->setupUi(this);
+    fillCameraComboBox(ui->channel, cameras);
 
     const QDateTime start = QDateTime::currentDateTime().addDays(-1);
     ui->startDateTime->setDateTime(start);
@@ -29,17 +30,17 @@ FileBrowser::~FileBrowser()
 
 void FileBrowser::on_search_clicked()
 {
-    const auto channelIndex = ui->channel->currentIndex();
-
-    if (channelIndex >= 0)
+    if (ui->channel->currentIndex() >= 0)
     {
+        const size_t channel = ui->channel->currentData().toULongLong();
+
         try
         {
             const QDateTime start = ui->startDateTime->dateTime();
             const QDateTime end = ui->endDateTime->dateTime();
 
             const std::vector<NET_DVR_FINDDATA_V50> files =
-                myDVR->findFiles(channelIndex, qDateTime2NetDVRSearchCond(start), qDateTime2NetDVRSearchCond(end));
+                myDVR->findFiles(channel, qDateTime2NetDVRSearchCond(start), qDateTime2NetDVRSearchCond(end));
 
             ui->table->clearContents();
             ui->table->setRowCount(0);

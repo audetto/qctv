@@ -10,8 +10,8 @@
 #include <QStandardPaths>
 #include <memory>
 
-DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr, const std::optional<size_t> channel,
-                             const QDateTime &start)
+DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr, const std::vector<Camera> &cameras,
+                             const std::optional<size_t> channel, const QDateTime &start)
     : QWidget(parent)
     , ui(new Ui::DownloadFrame)
     , myDVR(dvr)
@@ -19,10 +19,15 @@ DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr
     , mySaveFileDialog(this)
 {
     ui->setupUi(this);
+    fillCameraComboBox(ui->camera, cameras);
 
     if (channel)
     {
-        ui->camera->setCurrentIndex(*channel);
+        const int index = ui->camera->findData(QVariant::fromValue<qulonglong>(*channel));
+        if (index >= 0)
+        {
+            ui->camera->setCurrentIndex(index);
+        }
     }
 
     ui->startDateTime->setDateTime(start);
@@ -44,7 +49,13 @@ DownloadFrame::~DownloadFrame()
 
 void DownloadFrame::on_startButton_clicked()
 {
-    const size_t channel = ui->camera->currentIndex();
+    if (ui->camera->currentIndex() < 0)
+    {
+        ui->status->setText("No camera");
+        return;
+    }
+
+    const size_t channel = ui->camera->currentData().toULongLong();
     const QDateTime start = ui->startDateTime->dateTime();
     const QDateTime end = ui->endDateTime->dateTime();
 

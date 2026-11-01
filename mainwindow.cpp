@@ -34,27 +34,21 @@ void MainWindow::createCameraActions()
 {
     QAction *before = ui->menuCameras->actions().value(0);
 
-    std::vector<HK_IPChannel> ipChannels;
     try
     {
-        ipChannels = myDVR->getIPChannels();
+        myCameras = getOnlineCameras(*myDVR);
     }
     catch (const HK_Error &error)
     {
         showError(this, error);
     }
 
-    for (size_t i = 0; i < ipChannels.size(); ++i)
+    for (const Camera &camera : myCameras)
     {
-        const HK_IPChannel &channel = ipChannels[i];
-        if (channel.online)
-        {
-            const QString name = QString::fromStdString(ipChannels[i].name);
-            QAction *action = new QAction(name, ui->menuCameras);
-            action->setCheckable(true);
-            action->setData(QVariant::fromValue<qulonglong>(i));
-            ui->menuCameras->insertAction(before, action);
-        }
+        QAction *action = new QAction(camera.name, ui->menuCameras);
+        action->setCheckable(true);
+        action->setData(QVariant::fromValue<qulonglong>(camera.channel));
+        ui->menuCameras->insertAction(before, action);
     }
 }
 
@@ -88,7 +82,8 @@ void MainWindow::livePlay(const size_t channel)
     QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
 
     const bool subStream = ui->actionSubStream->isChecked();
-    const QString title = QString("Live Camera %1 (%2)").arg(1 + channel).arg(subStream ? "sub" : "main");
+    const QString title =
+        QString("Live: %1 (%2)").arg(getCameraName(channel), QLatin1String(subStream ? "sub" : "main"));
     window->setWindowTitle(title);
     window->show();
 
@@ -132,7 +127,7 @@ void MainWindow::playback(const size_t channel)
     QObject::connect(frame, &PlaybackTime::downloadOnChannel, this, &MainWindow::openDownloadOnChannel);
 
     QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
-    const QString title = QString("Playback Camera %1").arg(1 + channel);
+    const QString title = QString("Playback: %1").arg(getCameraName(channel));
     window->setWindowTitle(title);
     window->show();
 }
@@ -145,7 +140,7 @@ void MainWindow::on_actionDownload_triggered()
 
 void MainWindow::openDownloadOnChannel(const std::optional<size_t> channel, const QDateTime &start)
 {
-    DownloadFrame *frame = new DownloadFrame(nullptr, myDVR, channel, start);
+    DownloadFrame *frame = new DownloadFrame(nullptr, myDVR, myCameras, channel, start);
 
     QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
 
@@ -155,7 +150,7 @@ void MainWindow::openDownloadOnChannel(const std::optional<size_t> channel, cons
 
 void MainWindow::on_actionAbilities_triggered()
 {
-    AbilityViewer *frame = new AbilityViewer(nullptr, myDVR);
+    AbilityViewer *frame = new AbilityViewer(nullptr, myDVR, myCameras);
 
     QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
 
@@ -165,7 +160,7 @@ void MainWindow::on_actionAbilities_triggered()
 
 void MainWindow::on_actionBrowse_triggered()
 {
-    FileBrowser *frame = new FileBrowser(nullptr, myDVR);
+    FileBrowser *frame = new FileBrowser(nullptr, myDVR, myCameras);
 
     QObject::connect(frame, &FileBrowser::playbackByName, this, &MainWindow::openPlaybackByName);
 
@@ -182,4 +177,16 @@ void MainWindow::openPlaybackByName(const QString &name, const QDateTime &start,
 
     window->setWindowTitle(name);
     window->show();
+}
+
+QString MainWindow::getCameraName(const size_t channel) const
+{
+    for (const Camera &camera : myCameras)
+    {
+        if (camera.channel == channel)
+        {
+            return camera.name;
+        }
+    }
+    return QString("Camera %1").arg(1 + channel);
 }
