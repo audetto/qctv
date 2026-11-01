@@ -8,12 +8,12 @@ class HK_Callback_V40;
 class HK_Playback
 {
 public:
-    HK_Playback(const LONG handle, const std::shared_ptr<HK_Callback_V40> & callback);
+    HK_Playback(const LONG handle, const std::shared_ptr<HK_Callback_V40> &callback);
     ~HK_Playback();
 
     void resize();
 
-    void command(const DWORD command, void * ptr = nullptr, const size_t len = 0);
+    void command(const DWORD command, void *ptr = nullptr, const size_t len = 0);
 
     NET_DVR_TIME getOSDTime() const;
     int getDownloadPos() const;

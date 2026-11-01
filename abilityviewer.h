@@ -1,9 +1,10 @@
 #pragma once
 
-#include <QWidget>
 #include "HCNetSDK.h"
+#include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class AbilityViewer;
 }
 
@@ -14,7 +15,7 @@ class AbilityViewer : public QWidget
     Q_OBJECT
 
 public:
-    explicit AbilityViewer(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr);
+    explicit AbilityViewer(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr);
     ~AbilityViewer();
 
 private slots:

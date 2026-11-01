@@ -1,0 +1,10 @@
+BasedOnStyle: Microsoft
+AccessModifierOffset: -4
+BreakBeforeBraces: Allman
+
+PackConstructorInitializers: Never
+BreakConstructorInitializers: BeforeComma
+
+SortIncludes:
+  Enabled: true
+  IgnoreCase: false

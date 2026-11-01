@@ -1,13 +1,11 @@
 #include "playbackframe.h"
-#include "ui_playbackframe.h"
-
 #include "sdk/hk_dvr.h"
-#include "sdk/hk_playback.h"
 #include "sdk/hk_error.h"
-
+#include "sdk/hk_playback.h"
+#include "ui_playbackframe.h"
 #include "utils.h"
 
-PlaybackFrame::PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
+PlaybackFrame::PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr)
     : QFrame(parent)
     , ui(new Ui::PlaybackFrame)
     , myDVR(dvr)
@@ -40,7 +38,7 @@ void PlaybackFrame::resizeEvent(QResizeEvent *event)
         {
             myPlayback->resize();
         }
-        catch (const HK_Error & error)
+        catch (const HK_Error &error)
         {
             showError(this, error);
         }
@@ -70,7 +68,7 @@ void PlaybackFrame::on_play_clicked()
         ui->pause->setChecked(false);
         syncControls(false);
     }
-    catch (const HK_Error & error)
+    catch (const HK_Error &error)
     {
         resetPlayback();
         showError(this, error);
@@ -86,7 +84,7 @@ bool PlaybackFrame::command(const DWORD cmd)
             myPlayback->command(cmd);
             return true;
         }
-        catch (const HK_Error & error)
+        catch (const HK_Error &error)
         {
             showError(this, error);
             return false;
@@ -127,7 +125,7 @@ void PlaybackFrame::timerEvent(QTimerEvent *)
             ui->startDateTime->setDateTime(osd);
             ui->speed->setText(getLogSpeedString());
         }
-        catch (const HK_Error & error)
+        catch (const HK_Error &error)
         {
             resetPlayback();
             showError(this, error);

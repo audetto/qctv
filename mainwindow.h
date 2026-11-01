@@ -1,11 +1,11 @@
 #pragma once
 
 #include <QMainWindow>
-
 #include <memory>
 #include <optional>
 
-namespace Ui {
+namespace Ui
+{
 class MainWindow;
 }
 
@@ -17,7 +17,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr);
+    MainWindow(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr);
     ~MainWindow();
 
 private slots:
@@ -31,8 +31,8 @@ private slots:
 
     void on_actionDownload_triggered();
 
-    void openDownloadOnChannel(const std::optional<size_t> channel, const QDateTime & start);
-    void openPlaybackByName(const QString & name, const QDateTime & start, const QDateTime & end);
+    void openDownloadOnChannel(const std::optional<size_t> channel, const QDateTime &start);
+    void openPlaybackByName(const QString &name, const QDateTime &start, const QDateTime &end);
 
     void on_actionAbilities_triggered();
 

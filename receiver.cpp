@@ -1,7 +1,7 @@
 #include "receiver.h"
 #include <stdexcept>
 
-Receiver::Receiver(const QString & name)
+Receiver::Receiver(const QString &name)
     : myFile(name)
 {
     if (!myFile.open(QIODevice::WriteOnly))
@@ -23,12 +23,12 @@ void Receiver::moreData(const LONG lPlayHandle, const DWORD dwDataType, const BY
         break;
     }
     case NET_DVR_SYSHEAD:
-      {
+    {
         emit dataReceived(dwBufSize);
         const char *data = reinterpret_cast<const char *>(pBuffer);
         QByteArray ba = QByteArray::fromRawData(data, dwBufSize);
         myFile.write(ba);
         break;
-      }
+    }
     }
 }

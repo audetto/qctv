@@ -1,17 +1,13 @@
 #include "filebrowser.h"
-#include "ui_filebrowser.h"
-
 #include "HCNetSDK.h"
-
 #include "sdk/hk_dvr.h"
 #include "sdk/hk_error.h"
-
+#include "ui_filebrowser.h"
 #include "utils.h"
-#include <QLocale>
 #include <QDateTime>
+#include <QLocale>
 
-
-FileBrowser::FileBrowser(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
+FileBrowser::FileBrowser(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr)
     : QWidget(parent)
     , ui(new Ui::FileBrowser)
     , myDVR(dvr)
@@ -41,15 +37,15 @@ void FileBrowser::on_search_clicked()
             const QDateTime start = ui->startDateTime->dateTime();
             const QDateTime end = ui->endDateTime->dateTime();
 
-            const std::vector<NET_DVR_FINDDATA_V50> files = myDVR->findFiles(channelIndex,
-                qDateTime2NetDVRSearchCond(start), qDateTime2NetDVRSearchCond(end));
+            const std::vector<NET_DVR_FINDDATA_V50> files =
+                myDVR->findFiles(channelIndex, qDateTime2NetDVRSearchCond(start), qDateTime2NetDVRSearchCond(end));
 
             ui->table->clearContents();
             ui->table->setRowCount(0);
 
             QLocale locale;
 
-            for (const auto & value : files)
+            for (const auto &value : files)
             {
                 const int row = ui->table->rowCount();
                 ui->table->setRowCount(row + 1);
@@ -62,7 +58,7 @@ void FileBrowser::on_search_clicked()
                 const QString startTime = netDVR2QDateTime(value.struStartTime).toString();
                 QTableWidgetItem *startItem = new QTableWidgetItem(startTime);
                 ui->table->setItem(row, col++, startItem);
-                
+
                 const QString endTime = netDVR2QDateTime(value.struStopTime).toString();
                 QTableWidgetItem *endItem = new QTableWidgetItem(endTime);
                 ui->table->setItem(row, col++, endItem);
@@ -78,7 +74,7 @@ void FileBrowser::on_search_clicked()
 
             ui->table->resizeColumnsToContents();
         }
-        catch (const HK_Error & error)
+        catch (const HK_Error &error)
         {
             showError(this, error);
         }
@@ -90,7 +86,7 @@ void FileBrowser::on_open_clicked()
     const int row = ui->table->currentRow();
     if (row >= 0)
     {
-        const QTableWidgetItem * item = ui->table->item(row, 0);
+        const QTableWidgetItem *item = ui->table->item(row, 0);
         const NET_DVR_FINDDATA_V50 data = item->data(Qt::UserRole).value<NET_DVR_FINDDATA_V50>();
         const QString name(data.sFileName);
         const QDateTime start = netDVR2QDateTime(data.struStartTime);

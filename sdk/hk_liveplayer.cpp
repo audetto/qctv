@@ -1,6 +1,5 @@
 #include "sdk/hk_liveplayer.h"
 #include "sdk/hk_sdk.h"
-
 #include "sdk/hk_utils.h"
 
 HK_LivePlayer::HK_LivePlayer(const LONG handle, const size_t channel)
@@ -8,7 +7,6 @@ HK_LivePlayer::HK_LivePlayer(const LONG handle, const size_t channel)
     , myChannel(channel)
     , myRecording(false)
 {
-
 }
 
 HK_LivePlayer::~HK_LivePlayer()
@@ -27,7 +25,7 @@ size_t HK_LivePlayer::getChannel() const
     return myChannel;
 }
 
-void HK_LivePlayer::snapshot(const std::string & filename) const
+void HK_LivePlayer::snapshot(const std::string &filename) const
 {
     if (!NET_DVR_CapturePicture(myHandle, cast(filename)))
     {
@@ -44,7 +42,7 @@ void HK_LivePlayer::stop()
     }
 }
 
-void HK_LivePlayer::record(const std::string & filename)
+void HK_LivePlayer::record(const std::string &filename)
 {
     stop();
     if (!NET_DVR_SaveRealData(myHandle, cast(filename)))

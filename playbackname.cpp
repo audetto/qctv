@@ -4,9 +4,8 @@
 #include "sdk/hk_dvr.h"
 #include "sdk/hk_playback.h"
 
-
-PlaybackName::PlaybackName(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr, const QString & name, 
-    const QDateTime & start, const QDateTime & end)
+PlaybackName::PlaybackName(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr, const QString &name,
+                           const QDateTime &start, const QDateTime &end)
     : PlaybackFrame(parent, dvr)
     , myName(name)
 {

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "HCNetSDK.h"
-
 #include <string>
 
 class HK_LivePlayer
@@ -12,10 +11,10 @@ public:
 
     void resize();
 
-    void snapshot(const std::string & filename) const;
+    void snapshot(const std::string &filename) const;
     size_t getChannel() const;
 
-    void record(const std::string & filename);
+    void record(const std::string &filename);
     void stop();
 
 private:

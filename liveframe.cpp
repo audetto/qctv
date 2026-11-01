@@ -1,14 +1,12 @@
 #include "liveframe.h"
-#include "ui_liveframe.h"
-
-#include "sdk/hk_liveplayer.h"
 #include "sdk/hk_error.h"
+#include "sdk/hk_liveplayer.h"
+#include "ui_liveframe.h"
 #include "utils.h"
-
-#include <QSettings>
-#include <QDir>
 #include <QDateTime>
+#include <QDir>
 #include <QMessageBox>
+#include <QSettings>
 
 LiveFrame::LiveFrame(QWidget *parent)
     : QFrame(parent)
@@ -32,7 +30,7 @@ void LiveFrame::resizeEvent(QResizeEvent *event)
     }
 }
 
-void LiveFrame::setPlay(const std::shared_ptr<HK_LivePlayer> & play)
+void LiveFrame::setPlay(const std::shared_ptr<HK_LivePlayer> &play)
 {
     myLivePlayer = play;
 }
@@ -77,14 +75,15 @@ void LiveFrame::on_picture_clicked()
     }
 
     QDateTime now = QDateTime::currentDateTime();
-    QString filename = QString("C%1_").arg(myLivePlayer->getChannel()) + now.toString("yyyy-MM-dd_hh-mm-ss") + QString(".bmp");
+    QString filename =
+        QString("C%1_").arg(myLivePlayer->getChannel()) + now.toString("yyyy-MM-dd_hh-mm-ss") + QString(".bmp");
     QString path = dir.filePath(filename);
     try
     {
         myLivePlayer->snapshot(path.toStdString());
         ui->status->setText(path);
     }
-    catch (const HK_Error & error)
+    catch (const HK_Error &error)
     {
         showError(this, error);
     }
@@ -117,7 +116,8 @@ void LiveFrame::on_record_clicked()
     }
 
     QDateTime now = QDateTime::currentDateTime();
-    QString filename = QString("C%1_").arg(myLivePlayer->getChannel()) + now.toString("yyyy-MM-dd_hh-mm-ss") + QString(".ps");
+    QString filename =
+        QString("C%1_").arg(myLivePlayer->getChannel()) + now.toString("yyyy-MM-dd_hh-mm-ss") + QString(".ps");
     QString path = dir.filePath(filename);
     try
     {
@@ -129,7 +129,7 @@ void LiveFrame::on_record_clicked()
         ui->record->setEnabled(false);
         ui->stop->setEnabled(true);
     }
-    catch (const HK_Error & error)
+    catch (const HK_Error &error)
     {
         showError(this, error);
     }

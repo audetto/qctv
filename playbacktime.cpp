@@ -1,16 +1,13 @@
 #include "playbacktime.h"
-#include "ui_playbackframe.h"
-
 #include "sdk/hk_dvr.h"
 #include "sdk/hk_playback.h"
-
+#include "ui_playbackframe.h"
 #include "utils.h"
 
-PlaybackTime::PlaybackTime(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr, const size_t channel)
+PlaybackTime::PlaybackTime(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr, const size_t channel)
     : PlaybackFrame(parent, dvr)
     , myChannel(channel)
 {
-
 }
 
 void PlaybackTime::createPlayback()
@@ -20,13 +17,13 @@ void PlaybackTime::createPlayback()
 
     if (ui->forward->isChecked())
     {
-        myPlayback = myDVR->getPlayback(myChannel, getWindowHandle(), nullptr,
-            qDateTime2NetDVR50(myOrgStart), qDateTime2NetDVR50(myOrgEnd));
+        myPlayback = myDVR->getPlayback(myChannel, getWindowHandle(), nullptr, qDateTime2NetDVR50(myOrgStart),
+                                        qDateTime2NetDVR50(myOrgEnd));
     }
     else
     {
-        myPlayback = myDVR->getReversePlayback(myChannel, getWindowHandle(), nullptr,
-            qDateTime2NetDVR(myOrgStart), qDateTime2NetDVR(myOrgEnd));
+        myPlayback = myDVR->getReversePlayback(myChannel, getWindowHandle(), nullptr, qDateTime2NetDVR(myOrgStart),
+                                               qDateTime2NetDVR(myOrgEnd));
     }
 }
 

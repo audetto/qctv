@@ -1,9 +1,8 @@
 #include "sdk/hk_playback.h"
-
 #include "sdk/hk_callback.h"
 #include "sdk/hk_sdk.h"
 
-HK_Playback::HK_Playback(const LONG handle, const std::shared_ptr<HK_Callback_V40> & callback)
+HK_Playback::HK_Playback(const LONG handle, const std::shared_ptr<HK_Callback_V40> &callback)
     : myHandle(handle)
     , myCallback(callback)
 {
@@ -28,7 +27,7 @@ void HK_Playback::resize()
     command(NET_DVR_CHANGEWNDRESOLUTION);
 }
 
-void HK_Playback::command(const DWORD command, void * ptr, const size_t len)
+void HK_Playback::command(const DWORD command, void *ptr, const size_t len)
 {
     if (!NET_DVR_PlayBackControl_V40(myHandle, command, ptr, len, nullptr, nullptr))
     {

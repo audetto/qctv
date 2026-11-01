@@ -1,30 +1,25 @@
 #include "mainwindow.h"
-
-#include <QApplication>
-#include <QProcessEnvironment>
-#include <QCommandLineParser>
-
-#include <iostream>
-
-#include "sdk/hk_sdk.h"
 #include "sdk/hk_dvr.h"
-
+#include "sdk/hk_sdk.h"
+#include <QApplication>
+#include <QCommandLineParser>
+#include <QProcessEnvironment>
+#include <iostream>
 
 namespace
 {
 
-    void forceX11()
-    {
-        qputenv("QT_QPA_PLATFORM", "xcb");
-        qputenv("EGL_PLATFORM", "x11");
-    }
-
+void forceX11()
+{
+    qputenv("QT_QPA_PLATFORM", "xcb");
+    qputenv("EGL_PLATFORM", "x11");
 }
 
+} // namespace
 
 int main(int argc, char *argv[])
 {
-    forceX11();  // or the SDK crashes when drowing to the X11 window
+    forceX11(); // or the SDK crashes when drowing to the X11 window
 
     QApplication a(argc, argv);
     QApplication::setOrganizationName("AndSoft");
@@ -56,16 +51,14 @@ int main(int argc, char *argv[])
     try
     {
         const std::shared_ptr<const HK_SDK> sdk = std::make_shared<const HK_SDK>(parser.isSet(logOption));
-        const std::shared_ptr<HK_DVR> dvr = std::make_shared<HK_DVR>(sdk,
-                                                                     parser.value(hostnameOption).toStdString(),
-                                                                     parser.value(portOption).toInt(),
-                                                                     parser.value(usernameOption).toStdString(),
-                                                                     parser.value(passwordOption).toStdString());
+        const std::shared_ptr<HK_DVR> dvr = std::make_shared<HK_DVR>(
+            sdk, parser.value(hostnameOption).toStdString(), parser.value(portOption).toInt(),
+            parser.value(usernameOption).toStdString(), parser.value(passwordOption).toStdString());
         MainWindow w(nullptr, dvr);
         w.show();
         return a.exec();
     }
-    catch (const std::exception & e)
+    catch (const std::exception &e)
     {
         std::cerr << e.what() << std::endl;
     }

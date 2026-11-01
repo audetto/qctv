@@ -1,21 +1,19 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
-
-#include "sdk/hk_dvr.h"
-#include "sdk/hk_sdk.h"
-#include "sdk/hk_error.h"
-#include "liveframe.h"
-#include "playbacktime.h"
-#include "playbackname.h"
-#include "downloadframe.h"
 #include "abilityviewer.h"
+#include "downloadframe.h"
 #include "filebrowser.h"
+#include "liveframe.h"
+#include "playbackname.h"
+#include "playbacktime.h"
+#include "sdk/hk_dvr.h"
+#include "sdk/hk_error.h"
+#include "sdk/hk_sdk.h"
+#include "ui_mainwindow.h"
 #include "utils.h"
-
 #include <QMdiSubWindow>
 #include <QMessageBox>
 
-MainWindow::MainWindow(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
+MainWindow::MainWindow(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , myDVR(dvr)
@@ -45,9 +43,9 @@ void MainWindow::on_actionLive_triggered()
 
 void MainWindow::livePlay(const size_t channel)
 {
-    LiveFrame * frame = new LiveFrame();
+    LiveFrame *frame = new LiveFrame();
 
-    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
+    QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
     const QString title = QString("Live Camera %1").arg(1 + channel);
     window->setWindowTitle(title);
     window->show();
@@ -57,13 +55,12 @@ void MainWindow::livePlay(const size_t channel)
     {
         frame->setPlay(myDVR->getLivePlayer(channel, id));
     }
-    catch (const HK_Error & error)
+    catch (const HK_Error &error)
     {
         showError(this, error);
         window->close();
     }
 }
-
 
 void MainWindow::on_actionAbout_Qt_triggered()
 {
@@ -92,10 +89,10 @@ void MainWindow::on_actionPlayback_triggered()
 
 void MainWindow::playback(const size_t channel)
 {
-    PlaybackTime * frame = new PlaybackTime(nullptr, myDVR, channel);
+    PlaybackTime *frame = new PlaybackTime(nullptr, myDVR, channel);
     QObject::connect(frame, &PlaybackTime::downloadOnChannel, this, &MainWindow::openDownloadOnChannel);
 
-    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
+    QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
     const QString title = QString("Playback Camera %1").arg(1 + channel);
     window->setWindowTitle(title);
     window->show();
@@ -107,40 +104,40 @@ void MainWindow::on_actionDownload_triggered()
     openDownloadOnChannel(std::nullopt, start);
 }
 
-void MainWindow::openDownloadOnChannel(const std::optional<size_t> channel, const QDateTime & start)
+void MainWindow::openDownloadOnChannel(const std::optional<size_t> channel, const QDateTime &start)
 {
-    DownloadFrame * frame = new DownloadFrame(nullptr, myDVR, channel, start);
+    DownloadFrame *frame = new DownloadFrame(nullptr, myDVR, channel, start);
 
-    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
+    QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
     window->setWindowTitle("Download video");
     window->show();
 }
 
 void MainWindow::on_actionAbilities_triggered()
 {
-    AbilityViewer * frame = new AbilityViewer(nullptr, myDVR);
+    AbilityViewer *frame = new AbilityViewer(nullptr, myDVR);
 
-    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
+    QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
     window->setWindowTitle("Ability viewer");
     window->show();
 }
 
 void MainWindow::on_actionBrowse_triggered()
 {
-    FileBrowser * frame = new FileBrowser(nullptr, myDVR);
+    FileBrowser *frame = new FileBrowser(nullptr, myDVR);
 
     QObject::connect(frame, &FileBrowser::playbackByName, this, &MainWindow::openPlaybackByName);
 
-    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
+    QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
     window->setWindowTitle("File browser");
     window->show();
 }
 
-void MainWindow::openPlaybackByName(const QString & name, const QDateTime & start, const QDateTime & end)
+void MainWindow::openPlaybackByName(const QString &name, const QDateTime &start, const QDateTime &end)
 {
-    PlaybackName * frame = new PlaybackName(nullptr, myDVR, name, start, end);
+    PlaybackName *frame = new PlaybackName(nullptr, myDVR, name, start, end);
 
-    QMdiSubWindow * window = ui->mdiArea->addSubWindow(frame);
+    QMdiSubWindow *window = ui->mdiArea->addSubWindow(frame);
     window->setWindowTitle(name);
     window->show();
 }

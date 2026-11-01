@@ -1,9 +1,10 @@
 #pragma once
 
-#include <QFrame>
 #include <QDateTime>
+#include <QFrame>
 
-namespace Ui {
+namespace Ui
+{
 class LiveFrame;
 }
 
@@ -17,7 +18,7 @@ public:
     explicit LiveFrame(QWidget *parent = nullptr);
     ~LiveFrame();
 
-    void setPlay(const std::shared_ptr<HK_LivePlayer> & play);
+    void setPlay(const std::shared_ptr<HK_LivePlayer> &play);
 
     WId getWindowHandle() const;
 

@@ -12,6 +12,6 @@ public:
     static std::string getSDKVersion();
     static std::string getPlayerVersion();
 
-    [[ noreturn ]] static void error(const char * function);
-    static HK_Error debug(const char * function);
+    [[noreturn]] static void error(const char *function);
+    static HK_Error debug(const char *function);
 };

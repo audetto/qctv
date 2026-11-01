@@ -1,15 +1,13 @@
 #include "abilityviewer.h"
-#include "ui_abilityviewer.h"
-
 #include "sdk/hk_dvr.h"
 #include "sdk/hk_error.h"
-
+#include "ui_abilityviewer.h"
 #include <QFile>
+#include <QTextStream>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
-#include <QTextStream>
 
-AbilityViewer::AbilityViewer(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr)
+AbilityViewer::AbilityViewer(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr)
     : QWidget(parent)
     , ui(new Ui::AbilityViewer)
     , myDVR(dvr)
@@ -30,37 +28,37 @@ void AbilityViewer::retrieveAbility(DWORD ability, size_t channel)
     QString text;
     switch (ability)
     {
-        case DEVICE_SOFTHARDWARE_ABILITY:
-        case DEVICE_NETWORK_ABILITY:
-        case DEVICE_RAID_ABILITY:
-        {
-            break;
-        }
-        case DEVICE_DYNCHAN_ABILITY:
-        {
-            file.setFileName(":/resources/dynchan_ability_input.xml");
-            break;
-        }
-        case DEVICE_USER_ABILITY:
-        {
-            file.setFileName(":/resources/user_ability_input.xml");
-            break;
-        }
-        case DEVICE_VIDEOPIC_ABILITY:
-        {
-            file.setFileName(":/resources/videopic_ability_input.xml");
-            break;
-        }
-        case DEVICE_JPEG_CAP_ABILITY:
-        {
-            file.setFileName(":/resources/jpeg_cap_ability_input.xml");
-            break;
-        }
-        case STREAM_ABILITY:
-        {
-            file.setFileName(":/resources/stream_ability_input.xml");
-            break;
-        }
+    case DEVICE_SOFTHARDWARE_ABILITY:
+    case DEVICE_NETWORK_ABILITY:
+    case DEVICE_RAID_ABILITY:
+    {
+        break;
+    }
+    case DEVICE_DYNCHAN_ABILITY:
+    {
+        file.setFileName(":/resources/dynchan_ability_input.xml");
+        break;
+    }
+    case DEVICE_USER_ABILITY:
+    {
+        file.setFileName(":/resources/user_ability_input.xml");
+        break;
+    }
+    case DEVICE_VIDEOPIC_ABILITY:
+    {
+        file.setFileName(":/resources/videopic_ability_input.xml");
+        break;
+    }
+    case DEVICE_JPEG_CAP_ABILITY:
+    {
+        file.setFileName(":/resources/jpeg_cap_ability_input.xml");
+        break;
+    }
+    case STREAM_ABILITY:
+    {
+        file.setFileName(":/resources/stream_ability_input.xml");
+        break;
+    }
     }
 
     if (!file.fileName().isEmpty() && file.open(QFile::ReadOnly))
@@ -96,7 +94,8 @@ void AbilityViewer::retrieveAbility(DWORD ability, size_t channel)
 void AbilityViewer::updateAbilityData()
 {
     const std::vector<DWORD> abilities = {DEVICE_SOFTHARDWARE_ABILITY, DEVICE_NETWORK_ABILITY, DEVICE_RAID_ABILITY,
-        DEVICE_DYNCHAN_ABILITY, DEVICE_USER_ABILITY, DEVICE_VIDEOPIC_ABILITY, DEVICE_JPEG_CAP_ABILITY, STREAM_ABILITY};
+                                          DEVICE_DYNCHAN_ABILITY,      DEVICE_USER_ABILITY,    DEVICE_VIDEOPIC_ABILITY,
+                                          DEVICE_JPEG_CAP_ABILITY,     STREAM_ABILITY};
 
     const auto abilityIndex = ui->ability->currentIndex();
     const auto channelIndex = ui->channel->currentIndex();
@@ -108,7 +107,7 @@ void AbilityViewer::updateAbilityData()
         {
             retrieveAbility(ability, channelIndex);
         }
-        catch (const HK_Error & error)
+        catch (const HK_Error &error)
         {
             ui->text->setPlainText(error.what());
         }

@@ -1,19 +1,17 @@
 #include "downloadframe.h"
-#include "ui_downloadframe.h"
-
-#include "sdk/hk_playback.h"
+#include "receiver.h"
 #include "sdk/hk_dvr.h"
 #include "sdk/hk_error.h"
+#include "sdk/hk_playback.h"
+#include "ui_downloadframe.h"
 #include "utils.h"
-#include "receiver.h"
-
-#include <memory>
-#include <QStandardPaths>
-#include <QMessageBox>
 #include <QCloseEvent>
+#include <QMessageBox>
+#include <QStandardPaths>
+#include <memory>
 
-
-DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr, const std::optional<size_t> channel, const QDateTime & start)
+DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr, const std::optional<size_t> channel,
+                             const QDateTime &start)
     : QWidget(parent)
     , ui(new Ui::DownloadFrame)
     , myDVR(dvr)
@@ -29,7 +27,7 @@ DownloadFrame::DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dv
 
     ui->startDateTime->setDateTime(start);
 
-    const QDateTime end = start.addMSecs(1000 * 60 * 10);  // 10 minute
+    const QDateTime end = start.addMSecs(1000 * 60 * 10); // 10 minute
     ui->endDateTime->setDateTime(end);
 
     mySaveFileDialog.setDirectory(QStandardPaths::writableLocation(QStandardPaths::TempLocation));
@@ -51,7 +49,7 @@ void DownloadFrame::on_startButton_clicked()
 
     try
     {
-        const auto & rec = std::make_shared<Receiver>(ui->path->text());
+        const auto &rec = std::make_shared<Receiver>(ui->path->text());
         QObject::connect(rec.get(), &Receiver::dataReceived, this, &DownloadFrame::addData);
 
         mySize = 0;
@@ -69,17 +67,16 @@ void DownloadFrame::on_startButton_clicked()
         ui->startButton->setEnabled(false);
         ui->stopButton->setEnabled(true);
     }
-    catch (const HK_Error & error)
+    catch (const HK_Error &error)
     {
         resetDownload();
         showError(this, error);
     }
-    catch (const std::exception & error)
+    catch (const std::exception &error)
     {
         resetDownload();
         QMessageBox::critical(this, "File error", error.what());
     }
-
 }
 
 void DownloadFrame::on_stopButton_clicked()
@@ -105,7 +102,7 @@ void DownloadFrame::resetDownload()
     }
 }
 
-void DownloadFrame::timerEvent(QTimerEvent * event)
+void DownloadFrame::timerEvent(QTimerEvent *event)
 {
     if (myPlayback)
     {
@@ -131,7 +128,7 @@ void DownloadFrame::timerEvent(QTimerEvent * event)
                 resetDownload();
             }
         }
-        catch (const HK_Error & error)
+        catch (const HK_Error &error)
         {
             ui->status->setText("Error");
             resetDownload();

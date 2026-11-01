@@ -1,11 +1,11 @@
 #pragma once
 
-#include <QFrame>
-#include <QDateTime>
-
 #include "HCNetSDK.h"
+#include <QDateTime>
+#include <QFrame>
 
-namespace Ui {
+namespace Ui
+{
 class PlaybackFrame;
 }
 
@@ -17,7 +17,7 @@ class PlaybackFrame : public QFrame
     Q_OBJECT
 
 public:
-    PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr);
+    PlaybackFrame(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr);
     ~PlaybackFrame();
 
 protected:

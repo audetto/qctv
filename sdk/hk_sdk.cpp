@@ -1,31 +1,29 @@
 #include "sdk/hk_sdk.h"
-#include "sdk/hk_error.h"
-
 #include "HCNetSDK.h"
 #include "PlayM4.h"
-
-#include <sstream>
+#include "sdk/hk_error.h"
 #include <iostream>
 
 namespace
 {
 
-    void CALLBACK g_ExceptionCallBack(DWORD dwType, LONG lUserID, LONG lHandle, void * /* pUser */)
-    {
-        std::cerr << "Got some exception: " << dwType << " for user: " << lUserID << " and handle: " << lHandle << std::endl;
-    }
-
-    std::string getVersionString(const DWORD version)
-    {
-        const size_t major = (version >> 24) & 0xFF;
-        const size_t minor = (version >> 16) & 0xFF;
-        const size_t b1    = (version >> 8) & 0xFF;
-        const size_t b2    = version & 0xFF;
-
-        return std::to_string(major) + "." + std::to_string(minor) + "." + std::to_string(b1) + "." + std::to_string(b2);
-    }
-
+void CALLBACK g_ExceptionCallBack(DWORD dwType, LONG lUserID, LONG lHandle, void * /* pUser */)
+{
+    std::cerr << "Got some exception: " << dwType << " for user: " << lUserID << " and handle: " << lHandle
+              << std::endl;
 }
+
+std::string getVersionString(const DWORD version)
+{
+    const size_t major = (version >> 24) & 0xFF;
+    const size_t minor = (version >> 16) & 0xFF;
+    const size_t b1 = (version >> 8) & 0xFF;
+    const size_t b2 = version & 0xFF;
+
+    return std::to_string(major) + "." + std::to_string(minor) + "." + std::to_string(b1) + "." + std::to_string(b2);
+}
+
+} // namespace
 
 HK_SDK::HK_SDK(const bool logPrint)
 {
@@ -39,12 +37,12 @@ HK_SDK::~HK_SDK()
     NET_DVR_Cleanup();
 }
 
-[[ noreturn ]] void HK_SDK::error(const char * function)
+[[noreturn]] void HK_SDK::error(const char *function)
 {
     throw debug(function);
 }
 
-HK_Error HK_SDK::debug(const char * function)
+HK_Error HK_SDK::debug(const char *function)
 {
     const HK_Error err = HK_Error::create(function);
     std::cerr << err.what() << std::endl;

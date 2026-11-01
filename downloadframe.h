@@ -1,11 +1,11 @@
 #pragma once
 
+#include <QFileDialog>
+#include <QWidget>
 #include <optional>
 
-#include <QWidget>
-#include <QFileDialog>
-
-namespace Ui {
+namespace Ui
+{
 class DownloadFrame;
 }
 
@@ -17,8 +17,8 @@ class DownloadFrame : public QWidget
     Q_OBJECT
 
 public:
-    explicit DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr, 
-        const std::optional<size_t> channel, const QDateTime & start);
+    explicit DownloadFrame(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr, const std::optional<size_t> channel,
+                           const QDateTime &start);
     ~DownloadFrame();
 
 protected:

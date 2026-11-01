@@ -2,7 +2,8 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class FileBrowser;
 }
 
@@ -13,11 +14,11 @@ class FileBrowser : public QWidget
     Q_OBJECT
 
 public:
-    explicit FileBrowser(QWidget *parent, const std::shared_ptr<HK_DVR> & dvr);
+    explicit FileBrowser(QWidget *parent, const std::shared_ptr<HK_DVR> &dvr);
     ~FileBrowser();
 
 signals:
-    void playbackByName(const QString & name, const QDateTime & start, const QDateTime & end);
+    void playbackByName(const QString &name, const QDateTime &start, const QDateTime &end);
 
 private slots:
     void on_search_clicked();
